@@ -47,4 +47,29 @@ namespace DreamDay.Models
         /// </summary>
         public Vendor? Vendor { get; set; }
     }
+
+    public class UserClaim : IdentityUserClaim<Guid>
+    {
+
+    }
+    public class UserLogin : IdentityUserLogin<Guid>
+    {
+
+    }
+    public class UserRole : IdentityUserRole<Guid>
+    {
+
+    }
+    public class UserToken : IdentityUserToken<Guid>
+    {
+
+    }
+    public class RoleClaim : IdentityRoleClaim<Guid>
+    {
+
+    }
+    public class Role : IdentityRole<Guid>
+    {
+
+    }
 }

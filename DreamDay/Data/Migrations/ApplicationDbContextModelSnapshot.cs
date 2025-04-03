@@ -10,938 +10,938 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace DreamDay.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+  [DbContext(typeof(ApplicationDbContext))]
+  partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+  {
+    protected override void BuildModel(ModelBuilder modelBuilder)
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
-        {
 #pragma warning disable 612, 618
-            modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.11")
-                .HasAnnotation("Relational:MaxIdentifierLength", 128);
+      modelBuilder
+          .HasAnnotation("ProductVersion", "8.0.11")
+          .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+      SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("DreamDay.Models.Budget", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.Budget", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<decimal>("ActualAmount")
-                        .HasColumnType("decimal(18, 2)");
+            b.Property<decimal>("ActualAmount")
+                      .HasColumnType("decimal(18, 2)");
 
-                    b.Property<decimal>("AllocatedAmount")
-                        .HasColumnType("decimal(18, 2)");
+            b.Property<decimal>("AllocatedAmount")
+                      .HasColumnType("decimal(18, 2)");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("Category")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Description")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("WeddingId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("WeddingId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("WeddingId")
-                        .IsUnique();
+            b.HasIndex("WeddingId")
+                      .IsUnique();
 
-                    b.ToTable("Budgets");
-                });
+            b.ToTable("Budgets");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Couple", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.Couple", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("BrideName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("BrideName")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<DateTime?>("EngagementDate")
-                        .HasColumnType("datetime2");
+            b.Property<DateTime?>("EngagementDate")
+                      .HasColumnType("datetime2");
 
-                    b.Property<string>("GroomName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("GroomName")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+            b.HasIndex("UserId")
+                      .IsUnique();
 
-                    b.ToTable("Couples");
-                });
+            b.ToTable("Couples");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Guest", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.Guest", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("Email")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("GuestName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("GuestName")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("MealPreference")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("MealPreference")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+            b.Property<string>("PhoneNumber")
+                      .HasMaxLength(20)
+                      .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("SeatingArrangement")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("SeatingArrangement")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+            b.Property<string>("Status")
+                      .IsRequired()
+                      .HasMaxLength(50)
+                      .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid>("WeddingId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("WeddingId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("WeddingId");
+            b.HasIndex("WeddingId");
 
-                    b.ToTable("Guests");
-                });
+            b.ToTable("Guests");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Planner", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.Planner", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ContactPerson")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("ContactPerson")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Description")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+            b.Property<string>("PhoneNumber")
+                      .HasMaxLength(20)
+                      .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("PlannerName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("PlannerName")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("WebsiteURL")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("WebsiteURL")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+            b.HasIndex("UserId")
+                      .IsUnique();
 
-                    b.ToTable("Planners");
-                });
+            b.ToTable("Planners");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.PlannerVendor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.PlannerVendor", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PlannerId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("PlannerId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("VendorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("VendorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("PlannerId");
+            b.HasIndex("PlannerId");
 
-                    b.HasIndex("VendorId");
+            b.HasIndex("VendorId");
 
-                    b.ToTable("PlannerVendors");
-                });
+            b.ToTable("PlannerVendors");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.PlannerWedding", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.PlannerWedding", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("PlannerId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("PlannerId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("WeddingId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("WeddingId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("PlannerId");
+            b.HasIndex("PlannerId");
 
-                    b.HasIndex("WeddingId");
+            b.HasIndex("WeddingId");
 
-                    b.ToTable("PlannerWeddings");
-                });
+            b.ToTable("PlannerWeddings");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.User", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.User", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
+            b.Property<int>("AccessFailedCount")
+                      .HasColumnType("int");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ConcurrencyStamp")
+                      .IsConcurrencyToken()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+            b.Property<string>("Email")
+                      .HasMaxLength(256)
+                      .HasColumnType("nvarchar(256)");
 
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
+            b.Property<bool>("EmailConfirmed")
+                      .HasColumnType("bit");
 
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
+            b.Property<bool>("LockoutEnabled")
+                      .HasColumnType("bit");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+            b.Property<DateTimeOffset?>("LockoutEnd")
+                      .HasColumnType("datetimeoffset");
 
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+            b.Property<string>("NormalizedEmail")
+                      .HasMaxLength(256)
+                      .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+            b.Property<string>("NormalizedUserName")
+                      .HasMaxLength(256)
+                      .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("PasswordHash")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("PhoneNumber")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
+            b.Property<bool>("PhoneNumberConfirmed")
+                      .HasColumnType("bit");
 
-                    b.Property<DateTime>("RegistrationDate")
-                        .HasColumnType("datetime2");
+            b.Property<DateTime>("RegistrationDate")
+                      .HasColumnType("datetime2");
 
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("SecurityStamp")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
+            b.Property<int>("Status")
+                      .HasColumnType("int");
 
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
+            b.Property<bool>("TwoFactorEnabled")
+                      .HasColumnType("bit");
 
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+            b.Property<string>("UserName")
+                      .HasMaxLength(256)
+                      .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
+            b.Property<int>("UserType")
+                      .HasColumnType("int");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
+            b.HasIndex("NormalizedEmail")
+                      .HasDatabaseName("EmailIndex");
 
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+            b.HasIndex("NormalizedUserName")
+                      .IsUnique()
+                      .HasDatabaseName("UserNameIndex")
+                      .HasFilter("[NormalizedUserName] IS NOT NULL");
 
-                    b.ToTable("Users", (string)null);
-                });
+            b.ToTable("Users", (string)null);
+          });
 
-            modelBuilder.Entity("DreamDay.Models.UserProfile", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.UserProfile", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("Address")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("FirstName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("FirstName")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("LastName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("LastName")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+            b.Property<string>("PhoneNumber")
+                      .HasMaxLength(20)
+                      .HasColumnType("nvarchar(20)");
 
-                    b.Property<string>("ProfilePictureURL")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("ProfilePictureURL")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+            b.HasIndex("UserId")
+                      .IsUnique();
 
-                    b.ToTable("UserProfiles");
-                });
+            b.ToTable("UserProfiles");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Vendor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.Vendor", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Description")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageURL")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("ImageURL")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<bool>("IsPlanner")
-                        .HasColumnType("bit");
+            b.Property<bool>("IsPlanner")
+                      .HasColumnType("bit");
 
-                    b.Property<Guid?>("PlannerId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("PlannerId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Status")
-                        .HasMaxLength(50)
-                        .HasColumnType("int");
+            b.Property<int>("Status")
+                      .HasMaxLength(50)
+                      .HasColumnType("int");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("VendorName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("VendorName")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid>("VendorTypeId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("VendorTypeId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("WebsiteURL")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("WebsiteURL")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("PlannerId");
+            b.HasIndex("PlannerId");
 
-                    b.HasIndex("UserId")
-                        .IsUnique();
+            b.HasIndex("UserId")
+                      .IsUnique();
 
-                    b.HasIndex("VendorTypeId");
+            b.HasIndex("VendorTypeId");
 
-                    b.ToTable("Vendors");
-                });
+            b.ToTable("Vendors");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.VendorContactInfo", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.VendorContactInfo", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("Address")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("ContactName")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("ContactName")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Email")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("Email")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("PhoneNumber")
-                        .HasMaxLength(20)
-                        .HasColumnType("nvarchar(20)");
+            b.Property<string>("PhoneNumber")
+                      .HasMaxLength(20)
+                      .HasColumnType("nvarchar(20)");
 
-                    b.Property<Guid>("VendorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("VendorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("VendorId")
-                        .IsUnique();
+            b.HasIndex("VendorId")
+                      .IsUnique();
 
-                    b.ToTable("VendorContactInfos");
-                });
+            b.ToTable("VendorContactInfos");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.VendorType", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.VendorType", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("VendorTypeName")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+            b.Property<string>("VendorTypeName")
+                      .IsRequired()
+                      .HasMaxLength(100)
+                      .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.ToTable("VendorTypes");
-                });
+            b.ToTable("VendorTypes");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Venue", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.Venue", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Address")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("Address")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<int?>("Capacity")
-                        .HasColumnType("int");
+            b.Property<int?>("Capacity")
+                      .HasColumnType("int");
 
-                    b.Property<string>("ContactInfo")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("ContactInfo")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Description")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ImageURL")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("ImageURL")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("PriceRange")
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+            b.Property<string>("PriceRange")
+                      .HasMaxLength(50)
+                      .HasColumnType("nvarchar(50)");
 
-                    b.Property<Guid?>("VendorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("VendorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("VenueName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("VenueName")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<string>("VenueType")
-                        .HasMaxLength(100)
-                        .HasColumnType("nvarchar(100)");
+            b.Property<string>("VenueType")
+                      .HasMaxLength(100)
+                      .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("VendorId");
+            b.HasIndex("VendorId");
 
-                    b.ToTable("Venues");
-                });
+            b.ToTable("Venues");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Wedding", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.Wedding", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("BudgetId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("BudgetId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CoupleId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("CoupleId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<int?>("NumberOfGuests")
-                        .HasColumnType("int");
+            b.Property<int?>("NumberOfGuests")
+                      .HasColumnType("int");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+            b.Property<string>("Status")
+                      .IsRequired()
+                      .HasMaxLength(50)
+                      .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("Theme")
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("Theme")
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.Property<Guid?>("VenueId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid?>("VenueId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("WeddingDate")
-                        .HasColumnType("datetime2");
+            b.Property<DateTime>("WeddingDate")
+                      .HasColumnType("datetime2");
 
-                    b.Property<string>("WeddingName")
-                        .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("nvarchar(255)");
+            b.Property<string>("WeddingName")
+                      .IsRequired()
+                      .HasMaxLength(255)
+                      .HasColumnType("nvarchar(255)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("CoupleId");
+            b.HasIndex("CoupleId");
 
-                    b.HasIndex("VenueId");
+            b.HasIndex("VenueId");
 
-                    b.ToTable("Weddings");
-                });
+            b.ToTable("Weddings");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.WeddingVendor", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("DreamDay.Models.WeddingVendor", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("VendorId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("VendorId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("WeddingId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("WeddingId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("VendorId");
+            b.HasIndex("VendorId");
 
-                    b.HasIndex("WeddingId");
+            b.HasIndex("WeddingId");
 
-                    b.ToTable("WeddingVendors");
-                });
+            b.ToTable("WeddingVendors");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", b =>
+          {
+            b.Property<Guid>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ConcurrencyStamp")
+                      .IsConcurrencyToken()
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+            b.Property<string>("Name")
+                      .HasMaxLength(256)
+                      .HasColumnType("nvarchar(256)");
 
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
+            b.Property<string>("NormalizedName")
+                      .HasMaxLength(256)
+                      .HasColumnType("nvarchar(256)");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
+            b.HasIndex("NormalizedName")
+                      .IsUnique()
+                      .HasDatabaseName("RoleNameIndex")
+                      .HasFilter("[NormalizedName] IS NOT NULL");
 
-                    b.ToTable("AspNetRoles", (string)null);
-                });
+            b.ToTable("AspNetRoles", (string)null);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ClaimType")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ClaimValue")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("RoleId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("RoleId");
+            b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
+            b.ToTable("AspNetRoleClaims", (string)null);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserClaim<System.Guid>", b =>
+          {
+            b.Property<int>("Id")
+                      .ValueGeneratedOnAdd()
+                      .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+            SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ClaimType")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ClaimValue")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("Id");
+            b.HasKey("Id");
 
-                    b.HasIndex("UserId");
+            b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
+            b.ToTable("AspNetUserClaims", (string)null);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserLogin<System.Guid>", b =>
+          {
+            b.Property<string>("LoginProvider")
+                      .HasMaxLength(128)
+                      .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("ProviderKey")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+            b.Property<string>("ProviderKey")
+                      .HasMaxLength(128)
+                      .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("ProviderDisplayName")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("LoginProvider", "ProviderKey");
+            b.HasKey("LoginProvider", "ProviderKey");
 
-                    b.HasIndex("UserId");
+            b.HasIndex("UserId");
 
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
+            b.ToTable("AspNetUserLogins", (string)null);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserRole<System.Guid>", b =>
+          {
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("RoleId")
-                        .HasColumnType("uniqueidentifier");
+            b.Property<Guid>("RoleId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("UserId", "RoleId");
+            b.HasKey("UserId", "RoleId");
 
-                    b.HasIndex("RoleId");
+            b.HasIndex("RoleId");
 
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
+            b.ToTable("AspNetUserRoles", (string)null);
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
-                {
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserToken<System.Guid>", b =>
+          {
+            b.Property<Guid>("UserId")
+                      .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("LoginProvider")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+            b.Property<string>("LoginProvider")
+                      .HasMaxLength(128)
+                      .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(128)
-                        .HasColumnType("nvarchar(128)");
+            b.Property<string>("Name")
+                      .HasMaxLength(128)
+                      .HasColumnType("nvarchar(128)");
 
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+            b.Property<string>("Value")
+                      .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("UserId", "LoginProvider", "Name");
+            b.HasKey("UserId", "LoginProvider", "Name");
 
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
+            b.ToTable("AspNetUserTokens", (string)null);
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Budget", b =>
-                {
-                    b.HasOne("DreamDay.Models.Wedding", "Wedding")
-                        .WithOne("Budget")
-                        .HasForeignKey("DreamDay.Models.Budget", "WeddingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.Budget", b =>
+          {
+            b.HasOne("DreamDay.Models.Wedding", "Wedding")
+                      .WithOne("Budget")
+                      .HasForeignKey("DreamDay.Models.Budget", "WeddingId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Wedding");
-                });
+            b.Navigation("Wedding");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Couple", b =>
-                {
-                    b.HasOne("DreamDay.Models.User", "User")
-                        .WithOne("Couple")
-                        .HasForeignKey("DreamDay.Models.Couple", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.Couple", b =>
+          {
+            b.HasOne("DreamDay.Models.User", "User")
+                      .WithOne("Couple")
+                      .HasForeignKey("DreamDay.Models.Couple", "UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("User");
-                });
+            b.Navigation("User");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Guest", b =>
-                {
-                    b.HasOne("DreamDay.Models.Wedding", "Wedding")
-                        .WithMany("Guests")
-                        .HasForeignKey("WeddingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.Guest", b =>
+          {
+            b.HasOne("DreamDay.Models.Wedding", "Wedding")
+                      .WithMany("Guests")
+                      .HasForeignKey("WeddingId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Wedding");
-                });
+            b.Navigation("Wedding");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Planner", b =>
-                {
-                    b.HasOne("DreamDay.Models.User", "User")
-                        .WithOne("Planner")
-                        .HasForeignKey("DreamDay.Models.Planner", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.Planner", b =>
+          {
+            b.HasOne("DreamDay.Models.User", "User")
+                      .WithOne("Planner")
+                      .HasForeignKey("DreamDay.Models.Planner", "UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("User");
-                });
+            b.Navigation("User");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.PlannerVendor", b =>
-                {
-                    b.HasOne("DreamDay.Models.Planner", "Planner")
-                        .WithMany("PlannerVendors")
-                        .HasForeignKey("PlannerId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.PlannerVendor", b =>
+          {
+            b.HasOne("DreamDay.Models.Planner", "Planner")
+                      .WithMany("PlannerVendors")
+                      .HasForeignKey("PlannerId")
+                      .OnDelete(DeleteBehavior.NoAction)
+                      .IsRequired();
 
-                    b.HasOne("DreamDay.Models.Vendor", "Vendor")
-                        .WithMany("PlannerVendors")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+            b.HasOne("DreamDay.Models.Vendor", "Vendor")
+                      .WithMany("PlannerVendors")
+                      .HasForeignKey("VendorId")
+                      .OnDelete(DeleteBehavior.NoAction)
+                      .IsRequired();
 
-                    b.Navigation("Planner");
+            b.Navigation("Planner");
 
-                    b.Navigation("Vendor");
-                });
+            b.Navigation("Vendor");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.PlannerWedding", b =>
-                {
-                    b.HasOne("DreamDay.Models.Planner", "Planner")
-                        .WithMany("PlannerWeddings")
-                        .HasForeignKey("PlannerId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.PlannerWedding", b =>
+          {
+            b.HasOne("DreamDay.Models.Planner", "Planner")
+                      .WithMany("PlannerWeddings")
+                      .HasForeignKey("PlannerId")
+                      .OnDelete(DeleteBehavior.Restrict)
+                      .IsRequired();
 
-                    b.HasOne("DreamDay.Models.Wedding", "Wedding")
-                        .WithMany("PlannerWeddings")
-                        .HasForeignKey("WeddingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.HasOne("DreamDay.Models.Wedding", "Wedding")
+                      .WithMany("PlannerWeddings")
+                      .HasForeignKey("WeddingId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Planner");
+            b.Navigation("Planner");
 
-                    b.Navigation("Wedding");
-                });
+            b.Navigation("Wedding");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.UserProfile", b =>
-                {
-                    b.HasOne("DreamDay.Models.User", "User")
-                        .WithOne("Profile")
-                        .HasForeignKey("DreamDay.Models.UserProfile", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.UserProfile", b =>
+          {
+            b.HasOne("DreamDay.Models.User", "User")
+                      .WithOne("Profile")
+                      .HasForeignKey("DreamDay.Models.UserProfile", "UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("User");
-                });
+            b.Navigation("User");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Vendor", b =>
-                {
-                    b.HasOne("DreamDay.Models.Planner", "Planner")
-                        .WithMany()
-                        .HasForeignKey("PlannerId");
+      modelBuilder.Entity("DreamDay.Models.Vendor", b =>
+          {
+            b.HasOne("DreamDay.Models.Planner", "Planner")
+                      .WithMany()
+                      .HasForeignKey("PlannerId");
 
-                    b.HasOne("DreamDay.Models.User", "User")
-                        .WithOne("Vendor")
-                        .HasForeignKey("DreamDay.Models.Vendor", "UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.HasOne("DreamDay.Models.User", "User")
+                      .WithOne("Vendor")
+                      .HasForeignKey("DreamDay.Models.Vendor", "UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.HasOne("DreamDay.Models.VendorType", "VendorType")
-                        .WithMany("Vendors")
-                        .HasForeignKey("VendorTypeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+            b.HasOne("DreamDay.Models.VendorType", "VendorType")
+                      .WithMany("Vendors")
+                      .HasForeignKey("VendorTypeId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Planner");
+            b.Navigation("Planner");
 
-                    b.Navigation("User");
+            b.Navigation("User");
 
-                    b.Navigation("VendorType");
-                });
+            b.Navigation("VendorType");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.VendorContactInfo", b =>
-                {
-                    b.HasOne("DreamDay.Models.Vendor", "Vendor")
-                        .WithOne("ContactInfo")
-                        .HasForeignKey("DreamDay.Models.VendorContactInfo", "VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.VendorContactInfo", b =>
+          {
+            b.HasOne("DreamDay.Models.Vendor", "Vendor")
+                      .WithOne("ContactInfo")
+                      .HasForeignKey("DreamDay.Models.VendorContactInfo", "VendorId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.Navigation("Vendor");
-                });
+            b.Navigation("Vendor");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Venue", b =>
-                {
-                    b.HasOne("DreamDay.Models.Vendor", "Vendor")
-                        .WithMany("Venues")
-                        .HasForeignKey("VendorId");
+      modelBuilder.Entity("DreamDay.Models.Venue", b =>
+          {
+            b.HasOne("DreamDay.Models.Vendor", "Vendor")
+                      .WithMany("Venues")
+                      .HasForeignKey("VendorId");
 
-                    b.Navigation("Vendor");
-                });
+            b.Navigation("Vendor");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Wedding", b =>
-                {
-                    b.HasOne("DreamDay.Models.Couple", "Couple")
-                        .WithMany("Weddings")
-                        .HasForeignKey("CoupleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.Wedding", b =>
+          {
+            b.HasOne("DreamDay.Models.Couple", "Couple")
+                      .WithMany("Weddings")
+                      .HasForeignKey("CoupleId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.HasOne("DreamDay.Models.Venue", "Venue")
-                        .WithMany("Weddings")
-                        .HasForeignKey("VenueId")
-                        .OnDelete(DeleteBehavior.SetNull);
+            b.HasOne("DreamDay.Models.Venue", "Venue")
+                      .WithMany("Weddings")
+                      .HasForeignKey("VenueId")
+                      .OnDelete(DeleteBehavior.SetNull);
 
-                    b.Navigation("Couple");
+            b.Navigation("Couple");
 
-                    b.Navigation("Venue");
-                });
+            b.Navigation("Venue");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.WeddingVendor", b =>
-                {
-                    b.HasOne("DreamDay.Models.Vendor", "Vendor")
-                        .WithMany("WeddingVendors")
-                        .HasForeignKey("VendorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("DreamDay.Models.WeddingVendor", b =>
+          {
+            b.HasOne("DreamDay.Models.Vendor", "Vendor")
+                      .WithMany("WeddingVendors")
+                      .HasForeignKey("VendorId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.HasOne("DreamDay.Models.Wedding", "Wedding")
-                        .WithMany("WeddingVendors")
-                        .HasForeignKey("WeddingId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+            b.HasOne("DreamDay.Models.Wedding", "Wedding")
+                      .WithMany("WeddingVendors")
+                      .HasForeignKey("WeddingId")
+                      .OnDelete(DeleteBehavior.NoAction)
+                      .IsRequired();
 
-                    b.Navigation("Vendor");
+            b.Navigation("Vendor");
 
-                    b.Navigation("Wedding");
-                });
+            b.Navigation("Wedding");
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<System.Guid>", b =>
+          {
+            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
+                      .WithMany()
+                      .HasForeignKey("RoleId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<System.Guid>", b =>
-                {
-                    b.HasOne("DreamDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserClaim<System.Guid>", b =>
+          {
+            b.HasOne("DreamDay.Models.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<System.Guid>", b =>
-                {
-                    b.HasOne("DreamDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserLogin<System.Guid>", b =>
+          {
+            b.HasOne("DreamDay.Models.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<System.Guid>", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserRole<System.Guid>", b =>
+          {
+            b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole<System.Guid>", null)
+                      .WithMany()
+                      .HasForeignKey("RoleId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
 
-                    b.HasOne("DreamDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+            b.HasOne("DreamDay.Models.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<System.Guid>", b =>
-                {
-                    b.HasOne("DreamDay.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
+      modelBuilder.Entity("Microsoft.AspNetCore.Identity.UserToken<System.Guid>", b =>
+          {
+            b.HasOne("DreamDay.Models.User", null)
+                      .WithMany()
+                      .HasForeignKey("UserId")
+                      .OnDelete(DeleteBehavior.Cascade)
+                      .IsRequired();
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Couple", b =>
-                {
-                    b.Navigation("Weddings");
-                });
+      modelBuilder.Entity("DreamDay.Models.Couple", b =>
+          {
+            b.Navigation("Weddings");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Planner", b =>
-                {
-                    b.Navigation("PlannerVendors");
+      modelBuilder.Entity("DreamDay.Models.Planner", b =>
+          {
+            b.Navigation("PlannerVendors");
 
-                    b.Navigation("PlannerWeddings");
-                });
+            b.Navigation("PlannerWeddings");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.User", b =>
-                {
-                    b.Navigation("Couple");
+      modelBuilder.Entity("DreamDay.Models.User", b =>
+          {
+            b.Navigation("Couple");
 
-                    b.Navigation("Planner");
+            b.Navigation("Planner");
 
-                    b.Navigation("Profile");
+            b.Navigation("Profile");
 
-                    b.Navigation("Vendor");
-                });
+            b.Navigation("Vendor");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Vendor", b =>
-                {
-                    b.Navigation("ContactInfo");
+      modelBuilder.Entity("DreamDay.Models.Vendor", b =>
+          {
+            b.Navigation("ContactInfo");
 
-                    b.Navigation("PlannerVendors");
+            b.Navigation("PlannerVendors");
 
-                    b.Navigation("Venues");
+            b.Navigation("Venues");
 
-                    b.Navigation("WeddingVendors");
-                });
+            b.Navigation("WeddingVendors");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.VendorType", b =>
-                {
-                    b.Navigation("Vendors");
-                });
+      modelBuilder.Entity("DreamDay.Models.VendorType", b =>
+          {
+            b.Navigation("Vendors");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Venue", b =>
-                {
-                    b.Navigation("Weddings");
-                });
+      modelBuilder.Entity("DreamDay.Models.Venue", b =>
+          {
+            b.Navigation("Weddings");
+          });
 
-            modelBuilder.Entity("DreamDay.Models.Wedding", b =>
-                {
-                    b.Navigation("Budget");
+      modelBuilder.Entity("DreamDay.Models.Wedding", b =>
+          {
+            b.Navigation("Budget");
 
-                    b.Navigation("Guests");
+            b.Navigation("Guests");
 
-                    b.Navigation("PlannerWeddings");
+            b.Navigation("PlannerWeddings");
 
-                    b.Navigation("WeddingVendors");
-                });
+            b.Navigation("WeddingVendors");
+          });
 #pragma warning restore 612, 618
-        }
     }
+  }
 }

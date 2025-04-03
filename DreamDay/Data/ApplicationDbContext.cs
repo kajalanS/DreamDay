@@ -5,21 +5,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DreamDay.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<
+    //  TUser, TRole, TKey, TUserClaim, TUserRole, TUserLogin, TRoleClaim, TUserToken
+    public class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<
         User,
-        IdentityRole<Guid>,
+        Role,
         Guid,
-        IdentityUserClaim<Guid>,
-        IdentityUserRole<Guid>,
-        IdentityUserLogin<Guid>,
-        IdentityRoleClaim<Guid>,
-        IdentityUserToken<Guid>>
+        UserClaim,
+        UserRole,
+        UserLogin,
+        RoleClaim,
+        UserToken>(options)
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // User - UserProfile (One-to-One)

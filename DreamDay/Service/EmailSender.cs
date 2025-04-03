@@ -10,12 +10,12 @@ namespace DreamDay.Service
 {
     public class EmailSettings
     {
-        public string ClientId { get; set; }
+        public string ClientId { get; set; } = default!;
         public int SmtpPort { get; set; }
-        public string SmtpServer { get; set; }
-        public string ClientSecret { get; set; }
-        public string RefreshToken { get; set; }
-        public string FromEmail { get; set; }
+        public string SmtpServer { get; set; } = default!;
+        public string ClientSecret { get; set; } = default!;
+        public string RefreshToken { get; set; } = default!;
+        public string FromEmail { get; set; } = default!;
     }
 
     public class EmailSender : IEmailSender

@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using DreamDay.Database.Core.Enum;
 
 namespace DreamDay.Areas.Identity.Pages.Account
 {
@@ -26,6 +27,7 @@ namespace DreamDay.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _userManager;
+        private readonly RoleManager<Role> _roleManager;
         private readonly IUserStore<User> _userStore;
         private readonly IUserEmailStore<User> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
@@ -33,18 +35,22 @@ namespace DreamDay.Areas.Identity.Pages.Account
 
         public RegisterModel(
             UserManager<User> userManager,
+            RoleManager<Role> roleManager,
             IUserStore<User> userStore,
             SignInManager<User> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
+            _roleManager = roleManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
         }
+
+
 
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
@@ -65,12 +71,20 @@ namespace DreamDay.Areas.Identity.Pages.Account
         /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
+        public enum SubUserType
+        {
+            Couple = 2,
+            Vendor = 3,
+        }
+
         /// <summary>
         ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
         ///     directly from your code. This API may change or be removed in future releases.
         /// </summary>
         public class InputModel
         {
+
+            public SubUserType UserType { get; set; }
 
             [Required]
             public string UserName { get; set; }
@@ -118,12 +132,28 @@ namespace DreamDay.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
+                var userRoleStore = _roleManager.FindByNameAsync(UserType.Couple.ToString()).Result;
+
                 await _userStore.SetUserNameAsync(user, Input.UserName, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
                 {
+                    if (Input.UserType == SubUserType.Couple)
+                    {
+                        await _userManager.AddToRoleAsync(user, UserType.Couple.ToString().ToUpper());
+                    }
+                    else if (Input.UserType == SubUserType.Vendor)
+                    {
+                        await _userManager.AddToRoleAsync(user, UserType.Vendor.ToString().ToUpper());
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Invalid user type selected.");
+                        return Page();
+                    }
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

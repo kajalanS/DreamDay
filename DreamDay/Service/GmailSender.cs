@@ -8,7 +8,7 @@ using MimeKit;
 
 namespace DreamDay.Service
 {
-    public class EmailSettings
+    public class GmailSettings
     {
         public string ClientId { get; set; } = default!;
         public int SmtpPort { get; set; }
@@ -18,12 +18,12 @@ namespace DreamDay.Service
         public string FromEmail { get; set; } = default!;
     }
 
-    public class EmailSender : IEmailSender
+    public class GmailSender : IEmailSender
     {
-        private readonly EmailSettings _emailSettings;
+        private readonly GmailSettings _emailSettings;
         private readonly string[] Scopes = ["https://mail.google.com/"];
 
-        public EmailSender(IOptions<EmailSettings> emailSettings)
+        public GmailSender(IOptions<GmailSettings> emailSettings)
         {
             _emailSettings = emailSettings.Value;
         }

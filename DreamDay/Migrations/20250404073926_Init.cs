@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace DreamDay.Migrations
 {
     /// <inheritdoc />
@@ -12,7 +14,7 @@ namespace DreamDay.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
+                name: "Roles",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -22,7 +24,7 @@ namespace DreamDay.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                    table.PrimaryKey("PK_Roles", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -30,7 +32,6 @@ namespace DreamDay.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserType = table.Column<int>(type: "int", nullable: false),
                     RegistrationDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -79,9 +80,9 @@ namespace DreamDay.Migrations
                 {
                     table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
+                        name: "FK_AspNetRoleClaims_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -138,9 +139,9 @@ namespace DreamDay.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUserRoles", x => new { x.UserId, x.RoleId });
                     table.ForeignKey(
-                        name: "FK_AspNetUserRoles_AspNetRoles_RoleId",
+                        name: "FK_AspNetUserRoles_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "AspNetRoles",
+                        principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -471,17 +472,38 @@ namespace DreamDay.Migrations
                         principalColumn: "Id");
                 });
 
+            migrationBuilder.InsertData(
+                table: "Roles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[,]
+                {
+                    { new Guid("0bcd5209-3e88-42d5-ac8d-152994b47dbf"), null, "Couple", "COUPLE" },
+                    { new Guid("3976672d-feca-4be4-85e9-b926aef24a56"), null, "Admin", "ADMIN" },
+                    { new Guid("c6d9ccfb-538a-4190-a3f4-f0d6dfd3807d"), null, "Vendor", "VENDOR" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "RegistrationDate", "SecurityStamp", "Status", "TwoFactorEnabled", "UserName" },
+                values: new object[,]
+                {
+                    { new Guid("1012bf75-fba6-4a8a-a691-d562e931edd5"), 0, "8af8f69a-df04-4639-9220-c19de0f5fd6f", "admin@app.com", true, false, null, "ADMIN@APP.COM", "ADMIN", "AQAAAAIAAYagAAAAEHerbI/FNE0TWNCMlhOluq6Ip/x6bMj2553aFq6Pc1anJ6wjgdOmvNs0v8AgQ4TXaA==", null, false, new DateTime(2025, 4, 4, 13, 9, 25, 308, DateTimeKind.Local).AddTicks(1826), "945edf2d-f7be-4967-b223-6b83d9eba5f1", 1, false, "Admin" },
+                    { new Guid("61363a24-d328-4fb0-a655-deb7e4dd3e13"), 0, "c8eb0121-664c-45fa-b85b-bc7fb8384799", "sam@app.com", true, false, null, "SAM@APP.COM", "COUPLE", "AQAAAAIAAYagAAAAEFX9FlCywkI7JDQxNrNv5K8jbWNjs+YI1jeszQgHkjPMz4Ckk44xpox2wkfbUWvlVA==", null, false, new DateTime(2025, 4, 4, 13, 9, 25, 415, DateTimeKind.Local).AddTicks(6151), "6717b536-5180-436d-8ffc-346034478cf4", 1, false, "Couple" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "AspNetUserRoles",
+                columns: new[] { "RoleId", "UserId" },
+                values: new object[,]
+                {
+                    { new Guid("3976672d-feca-4be4-85e9-b926aef24a56"), new Guid("1012bf75-fba6-4a8a-a691-d562e931edd5") },
+                    { new Guid("0bcd5209-3e88-42d5-ac8d-152994b47dbf"), new Guid("61363a24-d328-4fb0-a655-deb7e4dd3e13") }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
                 column: "RoleId");
-
-            migrationBuilder.CreateIndex(
-                name: "RoleNameIndex",
-                table: "AspNetRoles",
-                column: "NormalizedName",
-                unique: true,
-                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetUserClaims_UserId",
@@ -540,6 +562,13 @@ namespace DreamDay.Migrations
                 name: "IX_PlannerWeddings_WeddingId",
                 table: "PlannerWeddings",
                 column: "WeddingId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "Roles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_UserProfiles_UserId",
@@ -647,7 +676,7 @@ namespace DreamDay.Migrations
                 name: "WeddingVendors");
 
             migrationBuilder.DropTable(
-                name: "AspNetRoles");
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Weddings");

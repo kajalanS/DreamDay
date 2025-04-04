@@ -11,12 +11,6 @@ namespace DreamDay.Models
     public class User : IdentityUser<Guid>
     {
         /// <summary>
-        /// Gets or sets the type of the user.
-        /// </summary>
-        [Required]
-        public UserType UserType { get; set; }
-
-        /// <summary>
         /// Gets or sets the registration date.
         /// </summary>
         public DateTime RegistrationDate { get; set; } = DateTime.Now;

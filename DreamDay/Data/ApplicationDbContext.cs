@@ -1,3 +1,4 @@
+using DreamDay.Database.Core.Enum;
 using DreamDay.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -121,9 +122,91 @@ namespace DreamDay.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>().ToTable("Users");
+            modelBuilder.Entity<Role>().ToTable("Roles");
+
+            // Seed data for roles and users
+            var AdminUser = new User
+            {
+                Id = Guid.NewGuid(),
+                Email = "admin@app.com",
+                NormalizedEmail = "ADMIN@APP.COM",
+                UserName = UserType.Admin.ToString(),
+                NormalizedUserName = UserType.Admin.ToString().ToUpper(),
+                PasswordHash = new PasswordHasher<User>().HashPassword(null, "password"),
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                RegistrationDate = DateTime.Now,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Status = UserStatus.Active,
+            };
+            var CoupleUser = new User
+            {
+                Id = Guid.NewGuid(),
+                Email = "sam@app.com",
+                NormalizedEmail = "SAM@APP.COM",
+                UserName = UserType.Couple.ToString(),
+                NormalizedUserName = UserType.Couple.ToString().ToUpper(),
+                PasswordHash = new PasswordHasher<User>().HashPassword(null, "password"),
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = false,
+                TwoFactorEnabled = false,
+                LockoutEnabled = false,
+                AccessFailedCount = 0,
+                RegistrationDate = DateTime.Now,
+                SecurityStamp = Guid.NewGuid().ToString(),
+                Status = UserStatus.Active,
+            };
+
+            // Seed Data for roles
+            var AdminRole = new Role
+            {
+                Id = Guid.NewGuid(),
+                Name = UserType.Admin.ToString(),
+                NormalizedName = UserType.Admin.ToString().ToUpper()
+            };
+            var CoupleRole = new Role
+            {
+                Id = Guid.NewGuid(),
+                Name = UserType.Couple.ToString(),
+                NormalizedName = UserType.Couple.ToString().ToUpper()
+            };
+            var VendorRole = new Role
+            {
+                Id = Guid.NewGuid(),
+                Name = UserType.Vendor.ToString(),
+                NormalizedName = UserType.Vendor.ToString().ToUpper()
+            };
+
+            // Seed Data for UserRole
+            var AdminUserRole = new UserRole
+            {
+                UserId = AdminUser.Id,
+                RoleId = AdminRole.Id
+            };
+
+            // Seed Data for CoupleUserRole
+            var CoupleUserRole = new UserRole
+            {
+                UserId = CoupleUser.Id,
+                RoleId = CoupleRole.Id
+            };
+            modelBuilder.Entity<Role>().HasData(
+                AdminRole, CoupleRole, VendorRole
+            );
+
+            modelBuilder.Entity<User>().HasData(
+                AdminUser, CoupleUser
+            );
+
+            modelBuilder.Entity<UserRole>().HasData(
+                AdminUserRole, CoupleUserRole
+            );
         }
 
-        //public DbSet<User> User { get; set; }
+        // public DbSet<User> User { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
         public DbSet<Couple> Couples { get; set; }
         public DbSet<Planner> Planners { get; set; }
@@ -137,6 +220,5 @@ namespace DreamDay.Data
         public DbSet<Guest> Guests { get; set; }
         public DbSet<Budget> Budgets { get; set; }
         public DbSet<PlannerWedding> PlannerWeddings { get; set; }
-        //public DbSet<User> User { get; set; } = default!;
     }
 }

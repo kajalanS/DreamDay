@@ -8,8 +8,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// builder.Services.ConfigureMailTrapServices(builder.Configuration);
 builder.Services.ConfigureGmailServices(builder.Configuration);
-builder.Services.ConfigureDatabaseServices(builder.Configuration);
+builder.Services.ConfigureDatabaseServices(builder.Configuration, ConnectionType.MySql);
 builder.Services.ConfigureCustomRoleServices(builder.Configuration);
 
 builder.Services.AddControllersWithViews();

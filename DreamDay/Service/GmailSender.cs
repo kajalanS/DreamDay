@@ -18,15 +18,10 @@ namespace DreamDay.Service
         public string FromEmail { get; set; } = default!;
     }
 
-    public class GmailSender : IEmailSender
+    public class GmailSender(IOptions<GmailSettings> emailSettings) : IEmailSender
     {
-        private readonly GmailSettings _emailSettings;
+        private readonly GmailSettings _emailSettings = emailSettings.Value;
         private readonly string[] Scopes = ["https://mail.google.com/"];
-
-        public GmailSender(IOptions<GmailSettings> emailSettings)
-        {
-            _emailSettings = emailSettings.Value;
-        }
 
         public async Task SendEmailAsync(string email, string subject, string message)
         {

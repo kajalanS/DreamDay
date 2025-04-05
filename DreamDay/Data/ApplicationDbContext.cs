@@ -123,6 +123,11 @@ namespace DreamDay.Data
 
             modelBuilder.Entity<User>().ToTable("Users");
             modelBuilder.Entity<Role>().ToTable("Roles");
+            modelBuilder.Entity<UserToken>().ToTable("UserTokens");
+            modelBuilder.Entity<UserRole>().ToTable("UserRoles");
+            modelBuilder.Entity<UserLogin>().ToTable("UserLogins");
+            modelBuilder.Entity<UserClaim>().ToTable("UserClaims");
+            modelBuilder.Entity<RoleClaim>().ToTable("RoleClaims");
 
             // Seed data for roles and users
             var AdminUser = new User

@@ -8,5 +8,6 @@ namespace DreamDay.Database.Core.Enum
         Active = 1,
         Inactive = 2,
         Pending = 3,
+        Suspended = 3,
     }
 }

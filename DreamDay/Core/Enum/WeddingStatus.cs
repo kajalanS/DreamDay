@@ -7,5 +7,4 @@ namespace DreamDay.Database.Core.Enum
         Completed = 3,
         Cancelled = 4
     }
-
 }

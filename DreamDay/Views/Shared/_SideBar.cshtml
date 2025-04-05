@@ -1,9 +1,9 @@
 <div class="sidebar p-2">
     <ul class="nav nav-pills nav-flush flex-column mb-auto text-center gap-2">
         <li class="nav-item">
-            <a href="@Url.Action("Index", "Home")" title="Home" @* class="@(Context.Request.Path == "/" ? "nav-link active py-3 border-bottom" : "nav-link py-3 border-bottom")" *@
-                class="nav-link @ManageNavPages.IndexNavClass(ViewContext) py-3 border-bottom" aria-current="page"
-                data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
+            <a href="@Url.Action("Index", "Home")" title="Home"
+                class="@(Context.Request.Path == "/" ? "nav-link active py-3 border-bottom" : "nav-link py-3 border-bottom")"
+                aria-current="page" data-bs-toggle="tooltip" data-bs-placement="right" data-bs-original-title="Home">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                     <path fill="none" d="M0 0h24v24H0z"></path>
                     <path
@@ -13,7 +13,7 @@
             </a>
         </li>
         <li class="nav-item">
-            <a asp-area="" asp-controller="Admin" asp-action="" title="User" data-bs-toggle="tooltip"
+            <a asp-area="" asp-controller="Admin" asp-action="" title="Admin" data-bs-toggle="tooltip"
                 data-bs-placement="right"
                 class="@(Context.Request.Path == "/admin" ? "nav-link active py-3 border-bottom" : "nav-link py-3 border-bottom")"
                 data-bs-original-title="User">
@@ -26,14 +26,40 @@
             </a>
         </li>
         <li class="nav-item">
-            <a asp-area="" asp-controller="Vendor" asp-action="" title="User" data-bs-toggle="tooltip"
+            <a asp-area="" asp-controller="Vendor" asp-action="" title="Vendor" data-bs-toggle="tooltip"
                 data-bs-placement="right"
                 class="@(Context.Request.Path == "/Vendor" ? "nav-link active py-3 border-bottom" : "nav-link py-3 border-bottom")"
-                data-bs-original-title="User">
+                data-bs-original-title="Vendor">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
                     <path fill="none" d="M0 0h24v24H0z"></path>
                     <path
-                        d="M21 19H23V21H1V19H3V4C3 3.44772 3.44772 3 4 3H14C14.5523 3 15 3.44772 15 4V19H19V11H17V9H20C20.5523 9 21 9.44772 21 10V19ZM5 5V19H13V5H5ZM7 11H11V13H7V11ZM7 7H11V9H7V7Z">
+                        d="M2 19V8H1V6H4V4C4 3.44772 4.44772 3 5 3H19C19.5523 3 20 3.44772 20 4V6H23V8H22V19H23V21H1V19H2ZM13 19V12H11V19H13ZM8 19V12H6V19H8ZM18 19V12H16V19H18ZM6 5V6H18V5H6Z">
+                    </path>
+                </svg>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Venue" asp-action="" title="Venue" data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                class="@(Context.Request.Path == "/Venue" ? "nav-link active py-3 border-bottom" : "nav-link py-3 border-bottom")"
+                data-bs-original-title="Venue">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path
+                        d="M21 19H23V21H1V19H3V4C3 3.44772 3.44772 3 4 3H14C14.5523 3 15 3.44772 15 4V19H17V9H20C20.5523 9 21 9.44772 21 10V19ZM7 11V13H11V11H7ZM7 7V9H11V7H7Z">
+                    </path>
+                </svg>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a asp-area="" asp-controller="Wedding" asp-action="Index" title="Wedding" data-bs-toggle="tooltip"
+                data-bs-placement="right"
+                class="@(Context.Request.Path == "/Wedding" ? "nav-link active py-3 border-bottom" : "nav-link py-3 border-bottom")"
+                data-bs-original-title="Wedding">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="currentColor">
+                    <path fill="none" d="M0 0h24v24H0z"></path>
+                    <path
+                        d="M12.455 2.30885L11.9998 2.07617L11.5447 2.30885C10.3952 2.89646 9.35317 3.6638 8.45557 4.57394C9.77392 5.26024 10.9693 6.15018 12.0001 7.20207C13.0308 6.15028 14.2261 5.26041 15.5443 4.57414C14.6466 3.66391 13.6045 2.8965 12.455 2.30885ZM10.6993 8.73433C8.98925 6.93503 6.72625 5.66541 4.18066 5.19783L3 4.98096V13.0002C3 16.8047 5.36065 20.0579 8.69711 21.3748C8.24472 19.9984 8 18.5278 8 17C8 13.9083 9.00215 11.0507 10.6993 8.73433ZM21 4.98096L19.8193 5.19783C14.233 6.22396 10 11.1168 10 17.0002C10 18.5362 10.2891 20.0071 10.8167 21.3598L11.0569 21.9754C11.3711 21.9852 11.6856 22.0002 12 22.0002C16.9706 22.0002 21 17.9708 21 13.0002V4.98096Z">
                     </path>
                 </svg>
             </a>

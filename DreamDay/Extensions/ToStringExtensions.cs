@@ -1,3 +1,5 @@
+using System.Security.Claims;
+using DreamDay.Database.Core.Enum;
 using DreamDay.Models;
 
 namespace DreamDay.Extensions
@@ -25,6 +27,42 @@ namespace DreamDay.Extensions
                 VendorTypeCategory.OtherVenue => "Other Venue",
                 _ => category.ToString()
             };
+        }
+
+        // public static string ToGetEnum<T>(this T enumData) where T : Enum
+        // {
+        //     var enumType = typeof(T);
+        //     if (enumType.IsEnum && Enum.IsDefined(enumType, enumData))
+        //     {
+        //         return enumData.ToString();
+        //     }
+        //     return string.Empty;
+        // }
+
+        // public static T ToEnum<T>(this string enumData) where T : Enum
+        // {
+        //     var enumType = typeof(T);
+        //     if (enumType.IsEnum && Enum.IsDefined(enumType, enumData))
+        //     {
+        //         return (T)Enum.Parse(enumType, enumData);
+        //     }
+        //     return default!;
+        // }
+
+        public static string ToDisplayName(this ClaimsPrincipal user)
+        {
+            var userTypeClaim = user.FindFirst(ClaimTypes.Role)?.Value;
+            if (Enum.TryParse(userTypeClaim, out UserType userType))
+            {
+                return userType switch
+                {
+                    UserType.Admin => UserType.Admin.ToString(),
+                    UserType.Couple => UserType.Couple.ToString(),
+                    UserType.Vendor => UserType.Vendor.ToString(),
+                    _ => userType.ToString()
+                };
+            }
+            return string.Empty;
         }
     }
 }

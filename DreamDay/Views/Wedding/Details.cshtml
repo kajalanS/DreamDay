@@ -25,3 +25,156 @@
         </div>
     </div>
 </div>
+
+<br />
+<hr />
+<div class="row">
+    <!-- Wedding Overview -->
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                Wedding Overview
+                <!-- Edit link (asp-action="EditWedding", asp-route-id="@Model.Id") -->
+                <a href="#" class="btn btn-sm btn-outline-primary float-end">Edit</a>
+            </div>
+            <div class="card-body">
+                <p><strong>Date:</strong> [Wedding Date]</p>
+                <p><strong>Status:</strong> <span class="badge bg-info">[Wedding Status e.g., Planning]</span></p>
+                <p><strong>Budget:</strong> $[Total Budget]</p>
+                <p><strong>Guest Count:</strong> [Estimated Guests]</p>
+                <p><strong>Venue:</strong> [Venue Name or 'Not Booked'] <a href="#">(Book/Change)</a></p>
+                <!-- Planner/Vendor Info -->
+                <p><strong>Planner:</strong> [Vendor Name or 'None'] <a href="#">(Invite Vendor)</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Budget Breakdown -->
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                Budget Tracker
+                <a href="#" class="btn btn-sm btn-outline-success float-end">Add Item</a>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <!-- Razor [at]for-each loop for Budget Items -->
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Venue Rental
+                        <span>$5,000 / $6,000</span>
+                        <div>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">E</a> <!-- Edit -->
+                            <a href="#" class="btn btn-sm btn-outline-danger">D</a> <!-- Delete -->
+                        </div>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        Catering
+                        <span>$3,500 / $4,000</span>
+                        <div>
+                            <a href="#" class="btn btn-sm btn-outline-secondary">E</a>
+                            <a href="#" class="btn btn-sm btn-outline-danger">D</a>
+                        </div>
+                    </li>
+                    <!-- End loop -->
+                </ul>
+                <div class="mt-2 fw-bold">Total Spent: $[Total Spent] / $[Total Budget]</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Task List -->
+    <div class="col-md-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                Task List
+                <a href="#" class="btn btn-sm btn-outline-success float-end">Add Task</a>
+            </div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush">
+                    <!-- Razor [at]for-each loop for Tasks -->
+                    <li class="list-group-item">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="task1">
+                            <label class="form-check-label" for="task1">
+                                Book Photographer <span class="text-muted small">(Due: 2023-12-01)</span>
+                            </label>
+                            <a href="#" class="btn btn-sm btn-outline-secondary float-end ms-1">E</a>
+                            <a href="#" class="btn btn-sm btn-outline-danger float-end">D</a>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="task2" checked>
+                            <label class="form-check-label" for="task2">
+                                Send Save-the-Dates <span class="text-muted small">(Due: 2023-11-15)</span>
+                            </label>
+                            <a href="#" class="btn btn-sm btn-outline-secondary float-end ms-1">E</a>
+                            <a href="#" class="btn btn-sm btn-outline-danger float-end">D</a>
+                        </div>
+                    </li>
+                    <!-- End loop -->
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <!-- Guest List / RSVP -->
+    <div class="col-md-12">
+        <div class="card mb-3">
+            <div class="card-header">
+                Guest List & RSVP
+                <a href="#" class="btn btn-sm btn-outline-success float-end ms-2">Add Guest</a>
+                <a href="#" class="btn btn-sm btn-outline-secondary float-end">Import Guests</a>
+            </div>
+            <div class="card-body">
+                <div class="mb-2">
+                    <strong>RSVP Summary:</strong> [Attending Count] Attending, [Declined Count] Declined, [Pending
+                    Count] Pending
+                </div>
+                <table class="table table-sm table-hover">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Party Size</th>
+                            <th>RSVP Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Razor [at]for-each loop for Guests -->
+                        <tr>
+                            <td>Alice Wonderland</td>
+                            <td>2</td>
+                            <td><span class="badge bg-success">Attending</span></td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Bob The Builder</td>
+                            <td>1</td>
+                            <td><span class="badge bg-secondary">Pending</span></td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Charlie Chaplin</td>
+                            <td>2</td>
+                            <td><span class="badge bg-danger">Declined</span></td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-outline-secondary">Edit</a>
+                                <a href="#" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                        </tr>
+                        <!-- End loop -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

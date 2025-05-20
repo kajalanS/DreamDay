@@ -1,0 +1,30 @@
+@model HomePageModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@if (ViewBag.Authenticated == null)
+{
+    ViewBag.Authenticated = false;
+    <partial name="partial/_guest.cshtml" />
+}
+else
+{
+    ViewBag.Authenticated = true;
+    if (@Model.UserRole == UserType.Admin)
+    {
+        <partial name="partial/_admin.cshtml" />
+    }
+    else if (@Model.UserRole == UserType.Couple)
+    {
+        <partial name="partial/_couple.cshtml" />
+    }
+    else if (@Model.UserRole == UserType.Vendor)
+    {
+        <partial name="partial/_vendor.cshtml" />
+    }
+    else
+    {
+        <partial name="partial/_guest.cshtml" />
+    }
+}

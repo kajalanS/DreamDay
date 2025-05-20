@@ -1,0 +1,120 @@
+@{
+    // Mock data - in a real scenario, this would come from a model or ViewData
+    var vendorName = "Michael's Photography";
+    var upcomingEventsCount = 5;
+    var eventsThisMonth = "3 Weddings";
+    var newInquiriesCount = "12 New";
+    var revenue = "$8,750";
+
+    var upcomingEventList = new List<dynamic> {
+        new { Name = "Sarah & David's Wedding", Date = "June 15, 2024", Venue = "Crystal Palace" },
+        new { Name = "Emma & James's Wedding", Date = "July 8, 2024", Venue = "Sunset Beach Resort" },
+        new { Name = "Lisa & John's Wedding", Date = "August 22, 2024", Venue = "Mountain View Gardens" }
+    };
+
+    var inquiryList = new List<dynamic> {
+        new { CoupleName = "Alex & Maria", Details = "Oct 12, 2024 • Photography", Message = "Interested in your full-day wedding package. Can we schedule a consultation?" },
+        new { CoupleName = "Robert & Tina", Details = "Sep 5, 2024 • Photography", Message = "Looking for engagement photos and wedding coverage. What are your rates?" }
+    };
+}
+
+<div class="container-fluid py-4"> @* Equivalent to space-y-6, applied to the container for overall spacing *@
+    <div class="bg-light rounded-3 p-4 mb-4"> @* bg-blue-50 rounded-lg p-6, mb-4 for space-y effect *@
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h2 class="fw-bold text-dark">@vendorName</h2>
+                <span class="badge rounded-pill bg-success text-white mt-2">
+                    Verified Vendor
+                </span>
+            </div>
+            <div class="text-end">
+                <div class="small text-muted">Upcoming Events</div>
+                <div class="display-6 fw-bold text-info">@upcomingEventsCount</div>
+            </div>
+        </div>
+        <div class="mt-4 row row-cols-1 row-cols-sm-3 g-3 text-center">
+            <div class="col">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <i class="bi bi-calendar-event fs-3 text-info"></i>
+                    <div class="mt-2 small text-muted">This Month</div>
+                    <div class="fw-semibold">@eventsThisMonth</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <i class="bi bi-people fs-3 text-success"></i>
+                    <div class="mt-2 small text-muted">Inquiries</div>
+                    <div class="fw-semibold">@newInquiriesCount</div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <i class="bi bi-currency-dollar fs-3 text-purple"></i> @* Assuming purple is a custom theme color or use another standard one *@
+                    <div class="mt-2 small text-muted">Revenue</div>
+                    <div class="fw-semibold">@revenue</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4"> @* grid grid-cols-1 md:grid-cols-3 gap-6 *@
+        <div class="col-md-8"> @* md:col-span-2 *@
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Upcoming Events</h5>
+                    <button type="button" class="btn btn-outline-primary btn-sm">View Calendar</button>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var ev in upcomingEventList)
+                        {
+                            <li class="list-group-item py-3">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <h6 class="fw-semibold mb-1">@ev.Name</h6>
+                                        <div class="small text-muted d-flex align-items-center mb-1">
+                                            <i class="bi bi-calendar-event me-1"></i> @ev.Date
+                                        </div>
+                                        <div class="small text-muted d-flex align-items-center">
+                                            <i class="bi bi-building me-1"></i> @ev.Venue
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-primary btn-sm">View Details</button>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4"> @* Remaining column *@
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0">Inquiries</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        @foreach (var inquiry in inquiryList)
+                        {
+                            <li class="p-3 bg-warning-subtle rounded-3 mb-3"> @* bg-yellow-50 rounded-lg, mb-3 for space-y effect *@
+                                <div class="d-flex justify-content-between align-items-start">
+                                    <div>
+                                        <p class="fw-semibold mb-0">@inquiry.CoupleName</p>
+                                        <p class="small text-muted">@inquiry.Details</p>
+                                    </div>
+                                    <span class="badge rounded-pill bg-warning text-dark">New</span>
+                                </div>
+                                <p class="mt-2 small">@inquiry.Message</p>
+                                <div class="mt-2 d-flex">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary me-2">Decline</button>
+                                    <button type="button" class="btn btn-sm btn-primary">Respond</button>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,128 @@
+@model DreamDay.Models.View.VendorProfilePageModel
+@{
+    ViewData["Title"] = "Manage Vendor Profile";
+}
+
+<h1>@ViewData["Title"]</h1>
+<hr />
+
+<!-- Form would use asp-controller, asp-action, method="post", enctype="multipart/form-data" (for image uploads) -->
+<form method="post" enctype="multipart/form-data">
+    <!-- Validation summary -->
+    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Basic Info -->
+            <div class="card mb-3">
+                <div class="card-header">Basic Information</div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label asp-for="CompanyName" class="form-label"></label>
+                        <input type="text" class="form-control" asp-for="CompanyName" />
+                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea class="form-control" rows="5" asp-for="Description"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ContactEmail" class="form-label"></label><input type="email"
+
+                            <input type="email" class="form-control" asp-for="ContactEmail" />
+                            <span asp-validation-for="ContactEmail" class="text-danger"></span>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label asp-for="PhoneNumber" class="form-label"></label>
+                        <input type="tel" class="form-control" asp-for="PhoneNumber" />
+                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                    </div>
+            </div>
+            <div class="mb-3">
+                <label asp-for="WebsiteURL" class="form-label"></label>
+                <input type="url" class="form-control" placeholder="https://..." asp-for="WebsiteURL" />
+
+                <span asp-validation-for="WebsiteURL" class="text-danger"></span>
+            </div>
+            <!-- Address fields -->
+                </div>
+    </div>
+
+        <!-- Service Categories -->
+
+    <div class="card mb-3">
+        <div class="card-header">Service Categories</div>
+        <div class="card-body">
+            <p>Select the services you offer:</p>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="cat1" value="Photographer">
+                <label class="form-check-label" for="cat1">Photographer</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="cat2" value="Florist">
+            <label class="form-check-label" for="cat2">Florist</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="cat3" value="Decorator">
+        <label class="form-check-label" for="cat3">Decorator</label>
+    </div>
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="checkbox" id="cat4" value="Caterer">
+            <label class="form-check-label" for="cat4">Caterer</label>
+            </div>
+                    <!-- Add more categories -->
+    </div>
+    </div>
+
+    <!-- Sub-vendors (if applicable) -->
+    <div class="card mb-3">
+        <div class="card-header">Manage Sub-Vendors (Team Members)</div>
+
+        <div class="card-body">
+                    <p>Feature under construction.</p>
+            </div>
+    </div>
+
+    </div>
+    <div class="col-md-4">
+    <!-- Profile Picture / Logo -->
+    <div class="card mb-3">
+        <div class="card-header">Profile Picture / Logo</div>
+        <div class="card-body text-center">
+            <img src="~/images/placeholder-profile.png" alt="Current Profile Image" class="img-thumbnail mb-2"
+
+            style="max-width: 200px;" />
+        <div class="mb-3">
+            <label for="profileImageUpload" class="form-label">Upload New Image</label>
+                <input class="form-control" type="file" id="profileImageUpload" name="ProfileImageFile">
+    </div>
+    </div>
+    </div>
+    <!-- Portfolio Images -->
+    <div class="card mb-3">
+         class="card-header">Portfolio Gallery</div>
+            <div class="card-body">
+                <p>Feature under construction.</p>
+                <div class="mb-3">
+                    <label for="portfolioImageUpload" class="form-label">Add Portfolio Images</label>
+                    <input class="form-control" type="file" id="portfolioImageUpload" name="PortfolioFiles"
+                        multiple>
+                </div>
+                </div>
+            </div>
+    </div>
+    </div>
+
+    <div class="d-lg-flex flex-column gap-2 mt-4 mb-4 mx-2">
+            <button type="submit" class="btn btn-primary">Save Profile</button>
+            <a href="#" class="btn btn-secondary">Cancel</a>
+    </div>
+</form>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+    <!-- Add any page-specific scripts if needed -->
+}

@@ -1,0 +1,168 @@
+@{
+    ViewData["Title"] = "Welcome to DreamDay";
+}
+
+<div>
+    <!-- Hero Section -->
+    <section class="py-5 text-center" style="background: linear-gradient(to right, #FFF1F2, #FFE4E6);">
+        <div class="container">
+            <h1 class="display-4 fw-bolder text-dark">
+                Plan Your Perfect <span class="text-primary">Wedding Day</span> @* text-primary or text-danger for rose color *@
+            </h1>
+            <p class="lead text-muted mt-3 mx-auto" style="max-width: 600px;">
+                Connect with trusted vendors, manage your guest list, and keep
+                track of every detail for your special day.
+            </p>
+            <div class="mt-5 d-flex justify-content-center gap-3">
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-primary btn-lg">Get Started</a>
+                <a asp-controller="Vendor" asp-action="Index" class="btn btn-outline-primary btn-lg">Find Vendors</a>
+            </div>
+            <div class="mt-5">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80"
+                    alt="Happy couple on their wedding day" class="img-fluid rounded shadow-lg"
+                    style="max-height: 400px; width: 100%; object-fit: cover;" />
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-5 bg-white">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bolder text-dark">How DreamDay Works</h2>
+                <p class="lead text-muted mt-3 mx-auto" style="max-width: 700px;">
+                    Everything you need to plan your perfect wedding, all in one place.
+                </p>
+            </div>
+            <div class="row g-4 text-center">
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <span class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle"
+                            style="background-color: #FFE4E6;">
+                            <i class="bi bi-people-fill fs-2 text-primary"></i> @* UsersIcon *@
+                        </span>
+                    </div>
+                    <h3 class="h4 fw-medium text-dark">For Couples</h3>
+                    <p class="text-muted">
+                        Create your wedding profile, manage your guest list, and find
+                        the perfect vendors for your special day.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <span class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle"
+                            style="background-color: #FFE4E6;">
+                            <i class="bi bi-building fs-2 text-primary"></i> @* BuildingIcon *@
+                        </span>
+                    </div>
+                    <h3 class="h4 fw-medium text-dark">For Vendors</h3>
+                    <p class="text-muted">
+                        Showcase your services, connect with couples, and grow your
+                        wedding business.
+                    </p>
+                </div>
+                <div class="col-md-4">
+                    <div class="mb-3">
+                        <span class="d-inline-flex align-items-center justify-content-center p-3 rounded-circle"
+                            style="background-color: #FFE4E6;">
+                            <i class="bi bi-clipboard-check fs-2 text-primary"></i> @* ClipboardCheckIcon *@
+                        </span>
+                    </div>
+                    <h3 class="h4 fw-medium text-dark">Planning Tools</h3>
+                    <p class="text-muted">
+                        Track your budget, manage tasks, and keep everything organized
+                        with our easy-to-use planning tools.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bolder text-dark">What Our Users Say</h2>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card shadow p-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                    alt="User Sarah" class="rounded-circle me-3"
+                                    style="width: 50px; height: 50px; object-fit: cover;" />
+                                <div>
+                                    <h4 class="h5 card-title mb-0 text-dark">Sarah & David</h4>
+                                    <p class="card-text small text-muted">Married June 2023</p>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted">
+                                "DreamDay made our wedding planning so much easier. We found our
+                                photographer and venue through the platform, and the budget
+                                tools saved us so much time!"
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow p-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=687&q=80"
+                                    alt="User Michael" class="rounded-circle me-3"
+                                    style="width: 50px; height: 50px; object-fit: cover;" />
+                                <div>
+                                    <h4 class="h5 card-title mb-0 text-dark">Michael's Photography</h4>
+                                    <p class="card-text small text-muted">Vendor since 2021</p>
+                                </div>
+                            </div>
+                            <p class="card-text text-muted">
+                                "As a wedding photographer, DreamDay has helped me connect with
+                                amazing couples and grow my business. The platform is intuitive
+                                and professional."
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card shadow p-3">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80"
+                                    alt="User Emma" class="rounded-circle me-3"
+                                    style="width: 50px; height: 50px; object-fit: cover;" />
+                                <div>
+                                    <h4 class="h5 card-title mb-0 text-dark">Emma & James</h4>
+
+                                    <p class="card-text small text-muted">Married September 2022</p>
+                                </div>
+                            </div>
+
+                            <p class="card-text text-muted">
+                                "The vendor-as-planner feature was a game-changer for us. Our
+                                florist helped coordinate everything and the day went perfectly.
+                                Thank you DreamDay!"
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 bg-primary text-white"> @* bg-primary or bg-danger for rose color *@
+        <div class="container text-center">
+            <h2 class="display-5 fw-bolder">Ready to Start Planning Your Dream Wedding?</h2>
+            <p class="lead mt-3" style="color: #f8d7da;"> @* Lighter text color for contrast *@
+                Join thousands of happy couples who have planned their perfect day with us.
+            </p>
+            <div class="mt-4">
+                <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg">Create Free Account</a>
+                @* btn-light for contrast on dark bg *@
+            </div>
+        </div>
+    </section>
+</div>

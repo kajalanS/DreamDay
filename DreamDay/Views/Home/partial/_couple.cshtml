@@ -1,0 +1,137 @@
+@{
+    // This model directive might be needed if you access model properties.
+    // For this static conversion, it's not strictly used by the converted HTML itself.
+    // @model YourApp.Models.HomePageModel
+}
+
+<div>
+    <div class="bg-danger-subtle rounded p-4 mb-4">
+        <div class="d-flex align-items-center justify-content-between">
+            <div>
+                <h2 class="fw-bold text-dark">Sarah & David's Wedding</h2>
+                <div class="d-flex align-items-center mt-2">
+                    <i class="bi bi-calendar text-danger me-2 fs-5"></i>
+                    <span class="text-muted">June 15, 2024</span>
+                </div>
+            </div>
+            <div class="text-end">
+                <div class="small text-muted">Days until your wedding</div>
+                <div class="display-4 fw-bold text-danger">284</div>
+            </div>
+        </div>
+        <div class="mt-4 row text-center g-3">
+            <div class="col-md-4">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <i class="bi bi-currency-dollar text-success mx-auto d-block fs-4"></i>
+                    <div class="mt-2 small text-muted">Budget</div>
+                    <div class="fw-semibold">LKR 28,500 / LKR 35,000</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <i class="bi bi-people text-primary mx-auto d-block fs-4"></i>
+                    <div class="mt-2 small text-muted">Guests</div>
+                    <div class="fw-semibold">120 / 150 Confirmed</div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="bg-white p-3 rounded shadow-sm">
+                    <i class="bi bi-clipboard-check text-info mx-auto d-block fs-4"></i>
+                    <div class="mt-2 small text-muted">Tasks</div>
+                    <div class="fw-semibold">42 / 78 Completed</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="fw-medium mb-0">Upcoming Tasks</h5>
+                    <a href="#" class="btn btn-outline-primary btn-sm">View All</a>
+                </div>
+                <div class="card-body p-0">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item py-3 d-flex align-items-center">
+                            <input type="checkbox" class="form-check-input mt-0 me-2">
+                            <div class="flex-grow-1">
+                                <p class="fw-medium mb-1">Book florist consultation</p>
+                                <p class="small text-muted mb-0">Due in 5 days</p>
+                            </div>
+                            <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Medium</span>
+                        </li>
+                        <li class="list-group-item py-3 d-flex align-items-center">
+                            <input type="checkbox" class="form-check-input mt-0 me-2">
+                            <div class="flex-grow-1">
+                                <p class="fw-medium mb-1">Send save-the-date cards</p>
+                                <p class="small text-muted mb-0">Due in 7 days</p>
+                            </div>
+                            <span class="badge rounded-pill bg-danger-subtle text-danger-emphasis">High</span>
+                        </li>
+                        <li class="list-group-item py-3 d-flex align-items-center">
+                            <input type="checkbox" class="form-check-input mt-0 me-2">
+                            <div class="flex-grow-1">
+                                <p class="fw-medium mb-1">Schedule cake tasting</p>
+                                <p class="small text-muted mb-0">Due in 12 days</p>
+                            </div>
+                            <span class="badge rounded-pill bg-success-subtle text-success-emphasis">Low</span>
+                        </li>
+                        <li class="list-group-item py-3 d-flex align-items-center">
+                            <input type="checkbox" class="form-check-input mt-0 me-2">
+                            <div class="flex-grow-1">
+                                <p class="fw-medium mb-1">Finalize guest list</p>
+                                <p class="small text-muted mb-0">Due in 14 days</p>
+                            </div>
+                            <span class="badge rounded-pill bg-warning-subtle text-warning-emphasis">Medium</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="fw-medium mb-0">Your Vendors</h5>
+                </div>
+                <div class="card-body">
+                    <ul class="list-unstyled">
+                        <li class="d-flex align-items-center mb-3">
+                            <div class="rounded-circle bg-primary-subtle text-primary d-flex align-items-center justify-content-center me-3"
+                                style="width: 2.5rem; height: 2.5rem;">
+                                <i class="bi bi-building fs-5"></i>
+                            </div>
+                            <div>
+                                <p class="fw-medium mb-1">Crystal Palace</p>
+                                <p class="small text-muted mb-0">Venue • Confirmed</p>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-center mb-3">
+                            <div class="rounded-circle bg-info-subtle text-info d-flex align-items-center justify-content-center me-3"
+                                style="width: 2.5rem; height: 2.5rem;">
+                                <i class="bi bi-person fs-5"></i>
+                            </div>
+                            <div>
+                                <p class="fw-medium mb-1">Michael's Photography</p>
+                                <p class="small text-muted mb-0">Photography • Confirmed</p>
+                            </div>
+                        </li>
+                        <li class="d-flex align-items-center">
+                            <div class="rounded-circle bg-success-subtle text-success d-flex align-items-center justify-content-center me-3"
+                                style="width: 2.5rem; height: 2.5rem;">
+                                <i class="bi bi-heart fs-5"></i>
+                            </div>
+                            <div>
+                                <p class="fw-medium mb-1">Elegant Flowers</p>
+                                <p class="small text-muted mb-0">Florist • In discussion</p>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="mt-4">
+                        <a href="#" class="btn btn-outline-primary d-block">Find More Vendors</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

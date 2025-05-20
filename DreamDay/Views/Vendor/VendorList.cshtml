@@ -1,0 +1,116 @@
+@using DreamDay.Models.View
+@model VendorPageModel
+@{
+    ViewData["Title"] = "Vendor";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 d-flex justify-content-between align-items-center">
+            <div>
+                <h2>Vendor </h2>
+                <p class="text-muted">
+                    <strong>Welcome to the Wedding Management System</strong>
+                    <span>Here you can manage all your Vendor details.</span>
+                </p>
+            </div>
+            @* <p>
+                <a asp-action="Create" class="btn btn-primary">Add New Vendor</a>
+            </p> *@
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Vendor Name</th>
+                        <th>Website</th>
+                        <th>Vendor Type Name</th>
+                        <th>Vendor Category</th>
+                        <th>Status</th>
+                        <th>Image</th>
+
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var vendor in Model.Vendors ?? Enumerable.Empty<Vendor>())
+                    {
+                        <tr>
+                            <td>@vendor.Id</td>
+                            <td>@vendor.VendorName</td>
+                            <td>@(vendor.WebsiteURL ?? "N/A")</td>
+                            <td>@(vendor.VendorType?.VendorTypeName ?? "N/A")</td>
+                            <td>@(vendor.VendorType?.Category != null ? vendor.VendorType.Category.ToDisplayName() : "N/A")
+                            <td>@(vendor.ImageURL ?? "N/A")</td>
+                            </td>
+                            <td>@vendor.Status.ToString()</td>
+
+                            @if (vendor?.UserId != null && Model.CurrentUser?.Id != null && vendor.UserId ==
+                                                    Model.CurrentUser.Id)
+                            {
+                                <td>
+                                    <a class="text-decoration-none" asp-action="Edit" asp-route-id="@vendor.Id">
+                                        <button type="button" class="btn btn-outline-secondary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"
+                                                fill="currentColor">
+                                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                                <path
+                                                    d="M9.24264 18.9967H21V20.9967H3V16.754L12.8995 6.85453L17.1421 11.0972L9.24264 18.9967ZM14.3137 5.44032L16.435 3.319C16.8256 2.92848 17.4587 2.92848 17.8492 3.319L20.6777 6.14743C21.0682 6.53795 21.0682 7.17112 20.6777 7.56164L18.5563 9.68296L14.3137 5.44032Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                    <a class="text-decoration-none" asp-action="Delete" asp-route-id="@vendor.Id">
+                                        <button type="button" class="btn btn-outline-danger">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"
+                                                fill="currentColor">
+                                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                                <path
+                                                    d="M17 4H22V6H20V21C20 21.5523 19.5523 22 19 22H5C4.44772 22 4 21.5523 4 21V6H2V4H7V2H17V4ZM9 9V17H11V9H9ZM13 9V17H15V9H13Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                    <a class="text-decoration-none" asp-action="Profile" asp-route-id="@vendor.Id">
+                                        <button type="button" class="btn btn-outline-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"
+                                                fill="currentColor">
+                                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                                <path
+                                                    d="M1 5C1 4.44772 1.44772 4 2 4H22C22.5523 4 23 4.44772 23 5V19C23 19.5523 22.5523 20 22 20H2C1.44772 20 1 19.5523 1 19V5ZM9 8H7V10H9V8ZM7 13V16H9V11H6V13H7ZM13 9V11H19V9H13ZM18 13H13V15H18V13Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                </td>
+                            }
+                            else
+                            {
+                                <td>
+                                    <a class="text-decoration-none" asp-action="Profile" asp-route-id="@vendor?.Id">
+                                        <button type="button" class="btn btn-outline-primary">
+                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="18" height="18"
+                                                fill="currentColor">
+                                                <path fill="none" d="M0 0h24v24H0z"></path>
+                                                <path
+                                                    d="M1 5C1 4.44772 1.44772 4 2 4H22C22.5523 4 23 4.44772 23 5V19C23 19.5523 22.5523 20 22 20H2C1.44772 20 1 19.5523 1 19V5ZM9 8H7V10H9V8ZM7 13V16H9V11H6V13H7ZM13 9V11H19V9H13ZM18 13H13V15H18V13Z">
+                                                </path>
+                                            </svg>
+                                        </button>
+                                    </a>
+                                    @* @Html.ActionLink("Details", "Details", new { id = wedding.Id }) *@
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

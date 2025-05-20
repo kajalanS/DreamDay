@@ -1,0 +1,10 @@
+{
+    "scripts": {
+        "sass": "sass -w scss/:wwwroot/css/ --stop-on-error --style=compressed --no-source-map",
+        "css-compile": "sass --style expanded --source-map --embed-sources --no-error-css scss/:wwwroot/css",
+        "merge": "sass-migrator module --verbose --migrate-deps scss/bootstrap.scss"
+    },
+    "dependencies": {
+        "bootstrap": "^5.3.6"
+    }
+}

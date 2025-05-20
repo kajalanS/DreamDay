@@ -1,0 +1,81 @@
+// {
+//     "version": "0.2.0",
+//     "configurations": [
+//         {
+//             "name": "C#: Launch Startup Project",
+//             "type": "dotnet",
+//             "request": "launch"
+//         }
+//     ]
+// }
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C#: Launch Startup Project",
+            "type": "dotnet",
+            "request": "launch"
+        },
+        // {
+        //     "name": "C# Launch (web)",
+        //     "type": "coreclr",
+        //     "request": "launch",
+        //     "preLaunchTask": "build",
+        //     "program": "${workspaceFolder}/bin/Debug/net8.0/DreamDay.dll",
+        //     "args": [],
+        //     "cwd": "${workspaceFolder}",
+        //     "stopAtEntry": false,
+        //     "serverReadyAction": {
+        //         "action": "openExternally",
+        //         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        //     },
+        //     "env": {
+        //         "ASPNETCORE_ENVIRONMENT": "Development"
+        //     },
+        //     "sourceFileMap": {
+        //         "/Views/": "${workspaceFolder}/Views/",
+        //         "/wwwroot/": "${workspaceFolder}/wwwroot/"
+        //     }
+        // },
+        // {
+        //     "name": ".NET Core Launch (web)",
+        //     "type": "coreclr",
+        //     "request": "launch",
+        //     "preLaunchTask": "build",
+        //     "program": "${workspaceFolder}/bin/Debug/net8.0/DreamDay.dll",
+        //     "args": [],
+        //     "cwd": "${workspaceFolder}",
+        //     "stopAtEntry": false,
+        //     "serverReadyAction": {
+        //         "action": "openExternally",
+        //         "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+        //     },
+        //     "env": {
+        //         "ASPNETCORE_ENVIRONMENT": "Development"
+        //     },
+        //     "sourceFileMap": {
+        //         "/Views/": "${workspaceFolder}/Views/",
+        //         "/wwwroot/": "${workspaceFolder}/wwwroot/"
+        //     }
+        // },
+        // {
+        //     "name": "Attach to .NET Core (watch)",
+        //     "type": "coreclr",
+        //     "request": "attach",
+        //     "processId": "${command:pickProcess}",
+        //     "justMyCode": true
+        // },
+        {
+            "name": "Watch + Attach Debugger",
+            "type": "coreclr",
+            "request": "attach",
+            "processId": "${command:pickProcess}",
+            "preLaunchTask": "dotnet watch run",
+            "justMyCode": true,
+            "sourceFileMap": {
+                "/Views/": "${workspaceFolder}/Views/",
+                "/wwwroot/": "${workspaceFolder}/wwwroot/"
+            }
+        }
+    ]
+}

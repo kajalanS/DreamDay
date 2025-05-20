@@ -13,7 +13,11 @@ builder.Services.ConfigureMailTrapServices(builder.Configuration);
 builder.Services.ConfigureDatabaseServices(builder.Configuration, ConnectionType.MySql);
 builder.Services.ConfigureCustomRoleServices(builder.Configuration);
 
-builder.Services.AddControllersWithViews();
+builder.Logging.AddConsole();
+
+builder.Services.AddSession();
+
+builder.Services.AddControllersWithViews().AddSessionStateTempDataProvider();
 
 var app = builder.Build();
 
@@ -33,6 +37,8 @@ app.UseStaticFiles();
 
 app.UseRouting();
 app.UseAuthorization();
+
+app.UseSession();
 
 app.MapControllerRoute(name: "default", pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();

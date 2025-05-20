@@ -1,0 +1,37 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        // {
+        //     "label": "watch-run",
+        //     "command": "dotnet",
+        //     "type": "process",
+        //     "args": [
+        //         "watch",
+        //         "run"
+        //     ],
+        //     "problemMatcher": "$msCompile",
+        //     "isBackground": true
+        // },
+        {
+            "label": "build",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/DreamDay.sln"
+            ],
+            "problemMatcher": "$msCompile",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "dotnet watch run",
+            "type": "shell",
+            "command": "dotnet watch run --project ${workspaceFolderBasename}",
+            "problemMatcher": [],
+            "isBackground": true
+        }
+    ]
+}

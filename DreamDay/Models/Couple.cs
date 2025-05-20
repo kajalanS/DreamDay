@@ -21,14 +21,14 @@ namespace DreamDay.Models
         public Guid UserId { get; set; }
 
         /// <summary>
-        /// Gets or sets the bride's name.
+        /// Gets or sets the bride's name. [female]
         /// </summary>
         [Required]
         [MaxLength(255)]
         public string BrideName { get; set; } = default!;
 
         /// <summary>
-        /// Gets or sets the groom's name.
+        /// Gets or sets the groom's name. [male]
         /// </summary>
         [Required]
         [MaxLength(255)]

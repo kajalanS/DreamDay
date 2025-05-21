@@ -1,3 +1,4 @@
+@model HomePageModel
 @{
     // This model directive might be needed if you access model properties.
     // For this static conversion, it's not strictly used by the converted HTML itself.
@@ -5,28 +6,31 @@
 }
 
 <div>
-    <div class="bg-danger-subtle rounded p-4 mb-4">
-        <div class="d-flex align-items-center justify-content-between">
-            <h2 class="fw-bold text-dark">Setup</h2>
-            <div class="text-end">
-                <a href="/Wedding/Setup" class="btn btn-outline-danger fw-bold btn-sm mt-2">
-                    <div class="fs-6 fw-bold">Config</div>
-                </a>
+    @if (ViewBag.isSetup == null || ViewBag.isSetup == false)
+    {
+        <div class="bg-danger-subtle rounded p-4 mb-4">
+            <div class="d-flex align-items-center justify-content-between">
+                <h2 class="fw-bold text-dark">Setup</h2>
+                <div class="text-end">
+                    <a href="/Wedding/Setup" class="btn btn-outline-danger fw-bold btn-sm mt-2">
+                        <div class="fs-6 fw-bold">Config</div>
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
+    }
     <div class="bg-danger-subtle rounded p-4 mb-4">
         <div class="d-flex align-items-center justify-content-between">
             <div>
-                <h2 class="fw-bold text-dark">Sarah & David's Wedding</h2>
+                <h2 class="fw-bold text-dark">@(Model.CurrentUser.Couple.Weddings.FirstOrDefault()?.WeddingName)</h2>
                 <div class="d-flex align-items-center mt-2">
                     <i class="bi bi-calendar text-danger me-2 fs-5"></i>
-                    <span class="text-muted">June 15, 2024</span>
+                    <span class="text-muted">@(Model.CurrentUser.Couple.Weddings.FirstOrDefault()?.WeddingDate.ToString("MMMM dd, yyyy"))</span>
                 </div>
             </div>
             <div class="text-end">
                 <div class="small text-muted">Days until your wedding</div>
-                <div class="display-4 fw-bold text-danger">284</div>
+                <div class="display-4 fw-bold text-danger">@(Math.Round((Model.CurrentUser.Couple.Weddings.FirstOrDefault()?.WeddingDate - DateTime.Now)?.TotalDays ?? 0))</div>
             </div>
         </div>
         <div class="mt-4 row text-center g-3">

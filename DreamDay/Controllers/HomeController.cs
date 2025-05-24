@@ -53,8 +53,9 @@ namespace DreamDay.Controllers
                     ErrorMessage = null
                 });
             }
-            else if (userRole == UserType.Vendor && user.Vendor != null)
+            else if (userRole == UserType.Vendor)
             {
+
                 var guestList = Context.Guests.Include(g => g.Wedding)
                             .Where(g => g.Wedding!.Vendors!.Any(v => v.UserId == user.Id))
                             .ToList().Select(x => new GuestViewModel()
@@ -88,6 +89,7 @@ namespace DreamDay.Controllers
                 Authenticated = authenticated,
                 UserRole = (UserType?)userRole,
                 CurrentUser = user,
+
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
                 ErrorMessage = null
             });

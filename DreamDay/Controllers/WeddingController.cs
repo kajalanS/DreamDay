@@ -22,6 +22,17 @@ namespace DreamDay.Controllers
         [HttpGet]
         public IActionResult Index()
         {
+            var userRole = User.IsInRole(UserType.Admin.ToString()) ? UserType.Admin : User.IsInRole(UserType.Couple.ToString()) ? UserType.Couple : UserType.Vendor;
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            var userId = Guid.Parse(userIdString);
+            var currentUser = Context.Users
+                .Include(u => u.Profile)
+                .Include(u => u.Couple)
+                .Include(u => u.Vendor)
+                .Include(u => u.Planner)
+                .FirstOrDefault(u => u.Id == userId);
+
+
             var weddingData = Context
                 .Weddings
                 .Include(x => x.Couple)
@@ -29,11 +40,24 @@ namespace DreamDay.Controllers
                 .Include(x => x.Budget)
                 .ToList();
 
+            if (weddingData.Any() && userRole == UserType.Couple)
+            {
+                weddingData = weddingData
+                    .Where(w => w.Couple.UserId == Guid.Parse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty))
+                    .ToList();
+            }
+            else if (weddingData.Any() && userRole == UserType.Vendor)
+            {
+                weddingData = weddingData
+                    .Where(w => w.Vendors.Any(v => v.UserId == userId))
+                    .ToList();
+            }
+
             return View(new WeddingPageModel
             {
                 Authenticated = User.Identity?.IsAuthenticated ?? false,
-                UserRole = User.IsInRole(UserType.Admin.ToString()) ? UserType.Admin : User.IsInRole(UserType.Couple.ToString()) ? UserType.Couple : UserType.Vendor,
-                CurrentUser = Context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name),
+                UserRole = userRole,
+                CurrentUser = currentUser,
                 Weddings = weddingData,
                 RequestId = HttpContext.TraceIdentifier
             });

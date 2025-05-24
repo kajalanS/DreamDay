@@ -5,5 +5,6 @@ namespace DreamDay.Models.View
     {
         public List<Venue> Venues = [];
         public List<string> VenuesCategory = [];
+        public List<string> VenuesCapacity = [];
     }
 }

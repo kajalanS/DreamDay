@@ -13,7 +13,7 @@ namespace DreamDay.Controllers
         public ApplicationDbContext Context { get; } = context;
 
         [HttpGet]
-        public IActionResult Index(string? searchQuery, List<string>? SelectedCategories)
+        public IActionResult Index(string? searchQuery, string? SelectedCategories, string? SelectedCapacity)
         {
             var venueData = Context
                 .Venues
@@ -25,6 +25,9 @@ namespace DreamDay.Controllers
             var venuesCategory = new List<string>(venuesCategoryHashSet);
             venuesCategory.Insert(0, "All Venues");
 
+            var venuesCapacity = new List<string> { "1-50", "51-100", "101-200", "201-300", "301-400", "401-500", "501-600", "601-700", "701-800", "801-900", "901-1000", "1001+" };
+            venuesCapacity.Insert(0, "All Capacities");
+
 
             // Filtering by search query
             if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -35,16 +38,51 @@ namespace DreamDay.Controllers
             }
 
             // Filtering by selected categories
-            if (SelectedCategories != null && SelectedCategories.Any())
+            if (!string.IsNullOrWhiteSpace(SelectedCategories))
             {
+                if (SelectedCategories.Trim().ToLowerInvariant() == "all venues")
+                {
+                    SelectedCategories = null; // Reset to null to include all venues
+                }
                 venueData = venueData
-                    .Where(v => v.VenueType != null)
-                    // .Where(v=> )
-                    .Where(v => v.VenueType != null && SelectedCategories.Contains(v.VenueType.ToString()))
+                    .Where(v => v.VenueType != null && v.VenueType.Trim().ToLowerInvariant() == SelectedCategories)
                     .ToList();
             }
 
-            ViewBag.SelectedCategories = SelectedCategories ?? new List<string>();
+            // Filtering by capacity
+            if (!string.IsNullOrWhiteSpace(SelectedCapacity) && SelectedCapacity.Trim().ToLowerInvariant() != "all capacities")
+            {
+                var capacity = SelectedCapacity.Trim().ToLowerInvariant();
+                int capacityMinValue = 0;
+                int capacityMaxValue = 0;
+
+                // Determine the capacity value based on the selected option
+                if (capacity.Contains("+"))
+                {
+                    // For options like "1001+" or "501+"
+                    capacityMaxValue = int.Parse(capacity.Replace("+", ""));
+                }
+                else if (capacity.Contains("-"))
+                {
+                    // For ranges like "1-50", "51-100", etc.
+                    var parts = capacity.Split('-');
+                    if (parts.Length == 2 && int.TryParse(parts[1], out int maxCapacity))
+                    {
+                        capacityMaxValue = maxCapacity;
+                    }
+                    if (parts.Length == 2 && int.TryParse(parts[0], out int minCapacity))
+                    {
+                        capacityMinValue = minCapacity;
+                    }
+                }
+
+                venueData = venueData
+                    .Where(v => v.Capacity >= capacityMinValue && v.Capacity <= capacityMaxValue)
+                    .ToList();
+            }
+
+            ViewBag.SelectedCategories = SelectedCategories ?? "All Venues";
+            ViewBag.SelectedCapacity = SelectedCapacity ?? "All Capacities";
             ViewBag.SearchQuery = searchQuery ?? "";
 
             return View(new VenuePageModel
@@ -54,6 +92,7 @@ namespace DreamDay.Controllers
                 CurrentUser = Context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name),
                 Venues = venueData,
                 VenuesCategory = venuesCategory,
+                VenuesCapacity = venuesCapacity,
                 RequestId = HttpContext.TraceIdentifier
             });
         }

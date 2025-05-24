@@ -66,7 +66,7 @@ namespace DreamDay.Models
         /// Gets or sets the vendor's account status.
         /// </summary>
         [Required]
-        public VendorStatus Status { get; set; } = VendorStatus.Active;
+        public VendorStatus Status { get; set; } = VendorStatus.Pending;
 
         /// <summary>
         /// Navigation property to the associated user.

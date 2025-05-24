@@ -30,6 +30,8 @@ namespace DreamDay.Controllers
             var user = Context.Users
                 .Include(u => u.Profile)
                 .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Budget)
+                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Venue)
+                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.WeddingVendors)
                 .Include(u => u.Planner)
                 .Include(u => u.Vendor)
                 .Where(u => u.Id == userId)

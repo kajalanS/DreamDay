@@ -25,6 +25,7 @@ namespace DreamDay.Controllers
                     .Include(x => x.User)
                     .Include(x => x.Venues)
                     .Include(x => x.VendorType)
+                    .Where(v => v.Status != VendorStatus.Suspended && v.Status != VendorStatus.Inactive)
                     .ToList();
             }
             catch (FormatException ex)

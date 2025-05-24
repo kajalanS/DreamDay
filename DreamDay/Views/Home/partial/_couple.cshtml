@@ -1,8 +1,9 @@
 @model HomePageModel
 @{
-    // This model directive might be needed if you access model properties.
-    // For this static conversion, it's not strictly used by the converted HTML itself.
-    // @model YourApp.Models.HomePageModel
+    ViewBag.Title = "Couple Dashboard";
+    var currentAmount = Model.CurrentUser?.Couple?.Weddings?.FirstOrDefault()?.WeddingVendors?.Sum(v => v.PriceRange) ?? 0;
+    var totalBudget = Model.CurrentUser?.Couple?.Weddings?.FirstOrDefault()?.Budget?.AllocatedAmount ?? 0;
+
 }
 
 <div>
@@ -38,7 +39,7 @@
                     <div class="bg-white p-3 rounded shadow-sm">
                         <i class="bi bi-currency-dollar text-success mx-auto d-block fs-4"></i>
                         <div class="mt-2 small text-muted">Budget</div>
-                        <div class="fw-semibold"> @(string.Format("LKR {0:N0}",Model.CurrentUser?.Couple?.Weddings?.FirstOrDefault()?.Budget?.ActualAmount)) / @(string.Format("LKR {0:N0}",Model.CurrentUser?.Couple?.Weddings?.FirstOrDefault()?.Budget?.AllocatedAmount))</div>
+                        <div class="fw-semibold"> @(string.Format("LKR {0:N0}",currentAmount)) / @(string.Format("LKR {0:N0}",totalBudget))</div>
                     </div>
                 </div>
                 <div class="col-md-4">

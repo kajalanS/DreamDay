@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using DreamDay.Attributes;
 using DreamDay.Data;
 using DreamDay.Database.Core.Enum;
@@ -98,6 +99,17 @@ namespace DreamDay.Controllers
                 return NotFound();
             }
 
+            // check the valid only for this
+            ModelState.Remove("Vendor");
+            foreach (var item in ModelState)
+            {
+                if (item.Value.Errors.Count > 0)
+                {
+                    // Log the error or handle it as needed
+                    Console.WriteLine($"ModelState Error: {item.Key} - {string.Join(", ", item.Value.Errors.Select(e => e.ErrorMessage))}");
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 vendor.VendorName = model.CompanyName!;
@@ -170,6 +182,102 @@ namespace DreamDay.Controllers
 
             // If ModelState is not valid, return the view with the model
             return View(model);
+        }
+
+        [HttpGet]
+        [Route("Vendor/Add/{vendorId:guid}")]
+        public IActionResult AddVendor(Guid vendorId)
+        {
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out _))
+            {
+                return View(null);
+            }
+            var userId = Guid.Parse(userIdString);
+            var user = Context.Users
+                 .Include(u => u.Profile)
+                 .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Budget)
+                 .Include(u => u.Planner)
+                 .Include(u => u.Vendor)?.ThenInclude(v => v.WeddingVendors)?.ThenInclude(v => v.Wedding)?.ThenInclude(w => w.Vendors)
+                 .FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var vendor = Context.Vendors.FirstOrDefault(v => v.Id == vendorId);
+            if (vendor == null)
+            {
+                return NotFound("Vendor not found.");
+            }
+
+            var wedding = user.Couple?.Weddings?.FirstOrDefault();
+            if (wedding == null)
+            {
+                return NotFound("Wedding not found for the user.");
+            }
+
+            var weddingVendor = new WeddingVendor
+            {
+                Id = Guid.NewGuid(),
+                WeddingId = wedding.Id,
+                VendorId = vendor.Id,
+                PriceRange = vendor.PriceRange
+            };
+
+            var existingWeddingVendor = Context.WeddingVendors
+                .FirstOrDefault(wv => wv.WeddingId == wedding.Id && wv.VendorId == vendor.Id);
+            if (existingWeddingVendor != null)
+            {
+                // If the wedding vendor already exists, you might want to handle it differently
+                // For example, you could return a message indicating that the vendor is already added
+                return RedirectToAction("ManageProfile", new { id = vendor.Id });
+            }
+
+            Context.WeddingVendors.Add(weddingVendor);
+            Context.SaveChanges();
+
+            return RedirectToAction("ManageProfile", new { id = vendor.Id });
+        }
+
+        [HttpGet]
+        [Route("Vendor/Remove/{vendorId:guid}")]
+        public IActionResult RemoveVendor(Guid vendorId)
+        {
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out _))
+            {
+                return View(null);
+            }
+            var userId = Guid.Parse(userIdString);
+            var user = Context.Users
+                 .Include(u => u.Profile)
+                 .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Budget)
+                 .Include(u => u.Planner)
+                 .Include(u => u.Vendor)?.ThenInclude(v => v.WeddingVendors)?.ThenInclude(v => v.Wedding)?.ThenInclude(w => w.Vendors)
+                 .FirstOrDefault(u => u.Id == userId);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var wedding = user.Couple?.Weddings?.FirstOrDefault();
+            if (wedding == null)
+            {
+                return NotFound("Wedding not found for the user.");
+            }
+
+            var weddingVendor = Context.WeddingVendors
+                .FirstOrDefault(wv => wv.WeddingId == wedding.Id && wv.VendorId == vendorId);
+            if (weddingVendor == null)
+            {
+                return NotFound("WeddingVendor not found.");
+            }
+
+            Context.WeddingVendors.Remove(weddingVendor);
+            Context.SaveChanges();
+
+            return RedirectToAction("ManageProfile", new { id = vendorId });
         }
     }
 }

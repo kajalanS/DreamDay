@@ -1,58 +1,7 @@
 @model VendorPageModel
 @{
     ViewData["Title"] = "Vendors";
-    // Mock data for demonstration, replace with actual model data
-    @* var vendors = new List<dynamic> {
-new {
-Id = 1,
-Name = "Michael's Photography",
-Category = "Photography",
-Rating = 4.8,
-ReviewCount = 124,
-Image = "https://images.unsplash.com/photo-1604017011826-d3b4c23f8914?ixlib=rb-4.0.3",
-Description = "Professional wedding photography with a natural, candid style.",
-Location = "San Francisco, CA",
-PriceRange = "$$",
-Verified = true
-},
-new {
-Id = 2,
-Name = "Elegant Flowers",
-Category = "Florist",
-Rating = 4.9,
-ReviewCount = 89,
-Image = "https://images.unsplash.com/photo-1558024920-b41e1887dc32?ixlib=rb-4.0.3",
-Description = "Bespoke floral designs for your special day.",
-Location = "Los Angeles, CA",
-PriceRange = "$$",
-Verified = true
-},
-new {
-Id = 3,
-Name = "Golden Gate Catering",
-Category = "Catering",
-Rating = 4.7,
-ReviewCount = 156,
-Image = "https://images.unsplash.com/photo-1555244162-803834f70033?ixlib=rb-4.0.3",
-Description = "Exquisite catering services with customizable menus.",
-Location = "San Francisco, CA",
-PriceRange = "$$$",
-Verified = true
-},
-new {
-Id = 4,
-Name = "Harmony Wedding Music",
-Category = "Music",
-Rating = 4.6,
-  using Azure.Core;
 
-#line default
-#line hidden
-#nullable disable
-iceRange = "$$",
-Verified = false
-},
-}; *@
     string searchQuery = "";
     if (Context.Request.Query.ContainsKey("searchQuery"))
     {
@@ -186,23 +135,40 @@ Verified = false
                                     style="height: 200px; object-fit: cover;">
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title">@vendor.VendorName</h5>
-                                    <p class="card-text"><small class="text-muted">@vendor.VendorType.Category</small></p>
-
-                                    @if (vendor.Status == VendorStatus.Active)
-                                    {
-                                        <span class="badge bg-success mb-2 align-self-start">Active</span>
-                                    }
+                                    <div class="d-flex align-items-center mb-2">
+                                        <span class="badge bg-primary m-2">@vendor.VendorType.Category</span>
+                                        @if (vendor.Status == VendorStatus.Active)
+                                        {
+                                            <span class="badge bg-success m-2 align-self-start">Active</span>
+                                        }
+                                        else if (vendor.Status == VendorStatus.Inactive)
+                                        {
+                                            <span class="badge bg-secondary m-2 align-self-start">Inactive</span>
+                                        }
+                                        else if (vendor.Status == VendorStatus.Pending)
+                                        {
+                                            <span class="badge bg-warning text-dark m-2 align-self-start">Pending</span>
+                                        }
+                                        else if (vendor.Status == VendorStatus.Suspended)
+                                        {
+                                            <span class="badge bg-danger m-2 align-self-start">Suspended</span>
+                                        }
+                                    </div>
 
                                     <p class="card-text flex-grow-1">@vendor.Description</p>
+                                    @* add amount *@
+                                    <p class="card-text"><strong>Price Range:</strong>
+                                        @(Math.Round(vendor.PriceRange, 2)) LKR
+                                    </p>
 
                                     @if (Model.UserRole == UserType.Couple)
                                     {
-                                        <a href="@Url.Action("Details", "Vendor", new { id = vendor.Id })"
+                                        <a href="@Url.Action("Profile", "Vendor", new { id = vendor.Id })"
                                             class="btn btn-primary mt-2">View Details</a>
                                     }
                                     else if (Model.UserRole == UserType.Vendor && vendor.UserId == Model.CurrentUser?.Id)
                                     {
-                                        <a href="@Url.Action("Edit", "Vendor", new { id = vendor.Id })"
+                                        <a href="@Url.Action("Profile", "Vendor", new { id = vendor.Id })"
                                             class="btn btn-secondary mt-2">Edit</a>
                                     }
                                 </div>

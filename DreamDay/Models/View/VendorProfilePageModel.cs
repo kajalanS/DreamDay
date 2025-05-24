@@ -5,7 +5,7 @@ namespace DreamDay.Models.View
 {
     public class VendorCreateModel
     {
-        public string VendorName { get; set; } = default!;
+        public string? VendorName { get; set; }
         public bool IsPlanner { get; set; } = false;
         public string? Description { get; set; }
         public string? WebsiteURL { get; set; }

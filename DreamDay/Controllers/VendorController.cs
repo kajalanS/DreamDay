@@ -17,10 +17,10 @@ namespace DreamDay.Controllers
         [HttpGet]
         public IActionResult Index(string? searchQuery, List<string>? SelectedCategories)
         {
-            List<Vendor> venueData = [];
+            List<Vendor> vendorData = [];
             try
             {
-                venueData = Context
+                vendorData = Context
                     .Vendors
                     .Include(x => x.User)
                     .Include(x => x.Venues)
@@ -35,7 +35,7 @@ namespace DreamDay.Controllers
             // Filtering by search query
             if (!string.IsNullOrWhiteSpace(searchQuery))
             {
-                venueData = venueData
+                vendorData = vendorData
                     .Where(v => v.VendorName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
                     .ToList();
             }
@@ -43,7 +43,7 @@ namespace DreamDay.Controllers
             // Filtering by selected categories
             if (SelectedCategories != null && SelectedCategories.Any())
             {
-                venueData = venueData
+                vendorData = vendorData
                     .Where(v => v.VendorType != null && v.VendorType?.Category != null)
                     // .Where(v=> )
                     .Where(v => SelectedCategories.Contains(v.VendorType.Category.ToString()))
@@ -58,7 +58,7 @@ namespace DreamDay.Controllers
                 Authenticated = User.Identity?.IsAuthenticated ?? false,
                 UserRole = User.IsInRole(UserType.Admin.ToString()) ? UserType.Admin : User.IsInRole(UserType.Couple.ToString()) ? UserType.Couple : UserType.Vendor,
                 CurrentUser = Context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name),
-                Vendors = venueData,
+                Vendors = vendorData,
                 VendorTypes = Context.VendorTypes.ToList(),
                 RequestId = HttpContext.TraceIdentifier
             });

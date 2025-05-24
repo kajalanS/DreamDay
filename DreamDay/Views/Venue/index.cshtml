@@ -1,12 +1,17 @@
+@model VenuePageModel
 @{
     ViewData["Title"] = "Venue";
+    string searchQuery = ViewBag.SearchQuery as string ?? "";
+    List<string> selectedCategories = ViewBag.SelectedCategories as List<string> ?? new List<string>();
+
     // Example Venue Data (Ideally, this would come from your Controller)
-    var venues = new[] {
+    @* var venues = new[] {
         new { id = 1, name = "Crystal Palace", type = "Ballroom", capacity = 300, rating = 4.8, reviewCount = 156, image = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3", description = "Elegant ballroom venue with crystal chandeliers and modern amenities.", location = "San Francisco, CA", priceRange = "$$$", features = new[] { "Parking", "Catering Kitchen", "Bridal Suite" } },
         new { id = 2, name = "Sunset Beach Resort", type = "Beach", capacity = 200, rating = 4.9, reviewCount = 124, image = "https://images.unsplash.com/photo-1544124499-58912cbddaad?ixlib=rb-4.0.3", description = "Beautiful beachfront venue perfect for sunset ceremonies.", location = "Los Angeles, CA", priceRange = "$$$$", features = new[] { "Beach Access", "Indoor/Outdoor", "Accommodation" } },
         new { id = 3, name = "Mountain View Gardens", type = "Garden", capacity = 150, rating = 4.7, reviewCount = 98, image = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3", description = "Stunning garden venue with mountain backdrop.", location = "Seattle, WA", priceRange = "$$", features = new[] { "Gardens", "Covered Area", "Photo Locations" } },
         new { id = 4, name = "Historic Grand Hotel", type = "Hotel", capacity = 400, rating = 4.6, reviewCount = 178, image = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3", description = "Iconic hotel venue with classic architecture and modern luxury.", location = "Chicago, IL", priceRange = "$$$$", features = new[] { "Accommodation", "Multiple Spaces", "Full Service" } }
-    };
+    }; *@
+    var venues = Model.Venues;
 }
 <div class="container">
     <div class="text-center mb-4">
@@ -23,9 +28,7 @@
         <div class="col-md-8">
             <div class="input-group">
                 <input type="text" class="form-control form-control-lg" placeholder="Search venues..." />
-                    <button class="btn btn-outline-secondary" type="button">
-                        Search
-                    </button>
+                <button class="btn btn-primary" type="button">Search</button>
             </div>
         </div>
     </div>
@@ -35,31 +38,28 @@
         <div class="col-md-3">
             @*  Consider creating a partial view for the filter *@
             <div class="card">
-                <div class="card-body">
+                <div class="card-header">
                     <h5 class="card-title">Filters</h5>
+                </div>
+                <div class="card-body">
                     @* Add filter controls here (e.g., dropdowns, checkboxes) *@
                     <label for="venueType">Venue Type:</label>
                     <select class="form-control" id="venueType">
-                        <option value="all">All</option>
-                        <option value="ballroom">Ballroom</option>
-                        <option value="beach">Beach</option>
-                        <option value="garden">Garden</option>
-                        <option value="hotel">Hotel</option>
+                        @foreach (var category in Model.VenuesCategory)
+                        {
+                            <div class="form-check">
+                                <option value="@category">@category</option>
+                            </div>
+                        }
                     </select>
-                    <label for="location">Location:</label>
-                    <select class="form-control" id="location">
+
+                    <label for="capacity">Capacity:</label>
+                    <select class="form-control" id="capacity">
                         <option value="all">All</option>
-                        <option value="sanFrancisco">San Francisco</option>
-                        <option value="losAngeles">Los Angeles</option>
-                        <option value="seattle">Seattle</option>
-                        <option value="chicago">Chicago</option>
-                    </select>
-                    <label for="priceRange">Price Range:</label>
-                    <select class="form-control" id="priceRange">
-                        <option value="all">All</option>
-                        <option value="low">Low</option>
-                        <option value="medium">Medium</option>
-                        <option value="high">High</option>
+                        <option value="1-50">1-50</option>
+                        <option value="51-100">51-100</option>
+                        <option value="101-200">101-200</option>
+                        <option value="201+">201+</option>
                     </select>
                 </div>
             </div>
@@ -67,24 +67,68 @@
 
         @* Venue Grid *@
         <div class="col-md-9">
-            <div class="row row-cols-1 row-cols-md-2 g-4">
-                @foreach (var venue in venues)
+            @if (venues == null || !venues.Any())
+            {
+                if (!string.IsNullOrEmpty(searchQuery) && venues != null && venues.Any())
                 {
-                    <div class="col">
-                        <div class="card h-100">
-                            <img src="@venue.image" class="object-fit-cover" style="height: 12rem;" alt="@venue.name">
-                            <div class="card-body">
-                                <h5 class="card-title">@venue.name</h5>
-                                <p class="card-text">@venue.description</p>
-                                <p class="card-text"><small class="text-muted">@venue.location</small></p>
-                            </div>
-                            <div class="card-footer">
-                                <small class="text-muted">Rating: @venue.rating</small>
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <div class="alert alert-warning" role="alert">
+                                No venues found for "<strong>@searchQuery</strong>". Please try a different search term.
                             </div>
                         </div>
                     </div>
                 }
-            </div>
+                else
+                {
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <div class="alert alert-info" role="alert">
+                                No venues available at the moment. Please check back later.
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="row row-cols-1 row-cols-md-2 g-4">
+                    @foreach (var venue in venues)
+                    {
+                        <div class="col">
+                            <div class="card h-100">
+                                <img src="@venue.ImageURL" class="object-fit-cover" style="height: 12rem;"
+                                    alt="@venue.VenueName">
+                                <div class="card-body">
+                                    <h5 class="card-title">@venue.VenueName</h5>
+                                    <p class="card-text">@venue.Description</p>
+                                    <p class="card-text"><small class="text-muted">@venue.Address</small></p>
+
+                                    <p class="card-text flex-grow-1">@venue.Description</p>
+                                    <p class="card-text"><strong>Price Range:</strong>
+                                        @(Math.Round(venue.PriceRange, 2)) LKR
+                                    </p>
+                                    <p class="card-text"><strong>Capacity:</strong>
+                                        @venue.Capacity
+                                    </p>
+
+                                    @if (Model.UserRole == UserType.Couple)
+                                    {
+                                        <a href="@Url.Action("Profile", "Venue", new { id = venue.Id })"
+                                            class="btn btn-primary mt-2">View Details</a>
+                                    }
+                                    else if (Model.UserRole == UserType.Vendor && venue?.Vendor?.UserId ==
+                                    Model.CurrentUser?.Id)
+                                    {
+                                        <a href="@Url.Action("Profile", "Venue", new { id = venue?.Id })"
+                                            class="btn btn-secondary mt-2">Edit</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>

@@ -2,21 +2,9 @@
 @{
     ViewData["Title"] = "Vendors";
 
-    string searchQuery = "";
-    string selectedCategories = "";
-    if (Context.Request.Query.ContainsKey("SelectedCategories"))
-    {
-        selectedCategories = Context.Request.Query["SelectedCategories"].ToString();
-    }
-    if (Context.Request.Query.ContainsKey("searchQuery"))
-    {
-        searchQuery = Context.Request.Query["searchQuery"].ToString();
-    }
+    string searchQuery = ViewBag.SearchQuery as string ?? "";
+    List<string> selectedCategories = ViewBag.SelectedCategories as List<string> ?? new List<string>();
     var vendors = Model.Vendors;
-    if (!string.IsNullOrEmpty(searchQuery))
-    {
-        vendors = vendors.Where(v => v.VendorName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
-    }
 }
 
 <div class="container my-5">
@@ -29,10 +17,10 @@
         </p>
     </div>
 
-    <!-- Search Bar -->
-    <div class="row justify-content-center mb-5">
-        <div class="col-md-8">
-            <form asp-action="Index" method="get">
+    <!-- Search & Filter Form -->
+    <form asp-action="Index" method="get">
+        <div class="row justify-content-center mb-5">
+            <div class="col-md-8">
                 <div class="input-group input-group-lg">
                     <span class="input-group-text" id="search-icon">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -42,146 +30,117 @@
                         </svg>
                     </span>
                     <input type="text" name="searchQuery" class="form-control" placeholder="Search vendors..."
-                        aria-label="Search vendors" aria-describedby="search-icon">
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div class="row g-4">
-        <!-- Filters Sidebar -->
-        <div class="col-md-3">
-            <div class="card">
-                <div class="card-header">
-                    Filters
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">Categories</h5>
-                    @* Placeholder for category filters - Updated to checkboxes *@
-                    <div class="mb-3">
-                        @foreach (var category in Html.GetEnumSelectList<VendorTypeCategory>())
-                        {
-                            <div class="form-check">
-                                <input class="form-check-input" name="SelectedCategories[]" type="checkbox" value="@category.Value"
-                                    id="@category.Value">
-                                <label class="form-check-label" name="SelectedCategories[]" for="@category.Value">
-                                    @category.Text
-                                </label>
-                            </div>
-                        }
-                    </div>
-                    <hr />
-
-                    @* Placeholder for location filter *@
-                    @* <h5 class="card-title">Location</h5> *@
-                    @* <select class="form-select mb-3">
-                        <option selected>All Locations</option>
-                        <option value="sf">San Francisco, CA</option>
-                        <option value="la">Los Angeles, CA</option>
-                        <option value="sea">Seattle, WA</option>
-                    </select>
-                    <hr /> *@
-
-                    @* Placeholder for price range filter *@
-                    @* <h5 class="card-title">Price Range</h5> *@
-                    @* <select class="form-select mb-3">
-                        <option selected>All Prices</option>
-                        <option value="1">$</option>
-                        <option value="2">$$</option>
-                        <option value="3">$$$</option>
-                    </select>
-                    <hr /> *@
-
-                    @* Placeholder for rating filter *@
-                    @* <h5 class="card-title">Rating</h5>
-                    <select class="form-select">
-                        <option selected>Any Rating</option>
-                        <option value="4">4 Stars & Up</option>
-                        <option value="3">3 Stars & Up</option>
-                    </select> *@
+                        aria-label="Search vendors" aria-describedby="search-icon" value="@searchQuery">
+                    <button class="btn btn-primary" type="submit">Search</button>
                 </div>
             </div>
         </div>
 
-        <!-- Vendor Grid -->
-        <div class="col-md-9">
-            @if (vendors == null || !vendors.Any())
-            {
-                if (searchQuery != null && !string.IsNullOrEmpty(searchQuery) && !vendors.Any())
-                {
-                    <div class="row mb-4">
-                        <div class="col-12 text-center">
-                            <div class="alert alert-warning" role="alert">
-                                No vendors found for "<strong>@searchQuery</strong>". Please try a different search term.
-                            </div>
-                        </div>
+        <div class="row g-4">
+            <!-- Filters Sidebar -->
+            <div class="col-md-3">
+                <div class="card">
+                    <div class="card-header">
+                        Filters
                     </div>
-                }
-                else
-                {
-                    <div class="row mb-4">
-                        <div class="col-12 text-center">
-                            <div class="alert alert-info" role="alert">
-                                No vendors available at the moment. Please check back later.
-                            </div>
+                    <div class="card-body">
+                        <h5 class="card-title">Categories</h5>
+                        <div class="mb-3">
+                            @foreach (var category in Html.GetEnumSelectList<VendorTypeCategory>())
+                            {
+                                var isChecked = selectedCategories.Contains(category.Text);
+                                <div class="form-check">
+                                    <input class="form-check-input" name="SelectedCategories" type="checkbox" value="@category.Text"
+                                        id="@category.Text" @(isChecked ? "checked" : "")>
+                                    <label class="form-check-label" for="@category.Text">
+                                        @category.Text
+                                    </label>
+                                </div>
+                            }
                         </div>
+                        <button type="submit" class="btn btn-outline-primary btn-sm mt-2">Apply Filters</button>
                     </div>
-                }
-            }
-            else
-            {
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                </div>
+            </div>
 
-                    @foreach (var vendor in vendors) @* Replace 'vendors' with Model if using a strongly-typed model *@
+            <!-- Vendor Grid -->
+            <div class="col-md-9">
+                @if (vendors == null || !vendors.Any())
+                {
+                    if (!string.IsNullOrEmpty(searchQuery) && !vendors.Any())
                     {
-                        <div class="col">
-                            <div class="card h-100 shadow-sm">
-                                <img src="@vendor.ImageURL" class="card-img-top" alt="@vendor.VendorName"
-                                    style="height: 200px; object-fit: cover;">
-                                <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title">@vendor.VendorName</h5>
-                                    <div class="d-flex align-items-center mb-2">
-                                        <span class="badge bg-primary m-2">@vendor.VendorType.Category</span>
-                                        @if (vendor.Status == VendorStatus.Active)
-                                        {
-                                            <span class="badge bg-success m-2 align-self-start">Active</span>
-                                        }
-                                        else if (vendor.Status == VendorStatus.Inactive)
-                                        {
-                                            <span class="badge bg-secondary m-2 align-self-start">Inactive</span>
-                                        }
-                                        else if (vendor.Status == VendorStatus.Pending)
-                                        {
-                                            <span class="badge bg-warning text-dark m-2 align-self-start">Pending</span>
-                                        }
-                                        else if (vendor.Status == VendorStatus.Suspended)
-                                        {
-                                            <span class="badge bg-danger m-2 align-self-start">Suspended</span>
-                                        }
-                                    </div>
-
-                                    <p class="card-text flex-grow-1">@vendor.Description</p>
-                                    @* add amount *@
-                                    <p class="card-text"><strong>Price Range:</strong>
-                                        @(Math.Round(vendor.PriceRange, 2)) LKR
-                                    </p>
-
-                                    @if (Model.UserRole == UserType.Couple)
-                                    {
-                                        <a href="@Url.Action("Profile", "Vendor", new { id = vendor.Id })"
-                                            class="btn btn-primary mt-2">View Details</a>
-                                    }
-                                    else if (Model.UserRole == UserType.Vendor && vendor.UserId == Model.CurrentUser?.Id)
-                                    {
-                                        <a href="@Url.Action("Profile", "Vendor", new { id = vendor.Id })"
-                                            class="btn btn-secondary mt-2">Edit</a>
-                                    }
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <div class="alert alert-warning" role="alert">
+                                    No vendors found for "<strong>@searchQuery</strong>". Please try a different search term.
                                 </div>
                             </div>
                         </div>
                     }
-                </div>
-            }
+                    else
+                    {
+                        <div class="row mb-4">
+                            <div class="col-12 text-center">
+                                <div class="alert alert-info" role="alert">
+                                    No vendors available at the moment. Please check back later.
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                        @foreach (var vendor in vendors)
+                        {
+                            <div class="col">
+                                <div class="card h-100 shadow-sm">
+                                    <img src="@vendor.ImageURL" class="card-img-top" alt="@vendor.VendorName"
+                                        style="height: 200px; object-fit: cover;">
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">@vendor.VendorName</h5>
+                                        <div class="d-flex align-items-center mb-2">
+                                            <span class="badge bg-primary m-2">@vendor.VendorType.Category</span>
+                                            @if (vendor.Status == VendorStatus.Active)
+                                            {
+                                                <span class="badge bg-success m-2 align-self-start">Active</span>
+                                            }
+                                            else if (vendor.Status == VendorStatus.Inactive)
+                                            {
+                                                <span class="badge bg-secondary m-2 align-self-start">Inactive</span>
+                                            }
+                                            else if (vendor.Status == VendorStatus.Pending)
+                                            {
+                                                <span class="badge bg-warning text-dark m-2 align-self-start">Pending</span>
+                                            }
+                                            else if (vendor.Status == VendorStatus.Suspended)
+                                            {
+                                                <span class="badge bg-danger m-2 align-self-start">Suspended</span>
+                                            }
+                                        </div>
+
+                                        <p class="card-text flex-grow-1">@vendor.Description</p>
+                                        <p class="card-text"><strong>Price Range:</strong>
+                                            @(Math.Round(vendor.PriceRange, 2)) LKR
+                                        </p>
+
+                                        @if (Model.UserRole == UserType.Couple)
+                                        {
+                                            <a href="@Url.Action("Profile", "Vendor", new { id = vendor.Id })"
+                                                class="btn btn-primary mt-2">View Details</a>
+                                        }
+                                        else if (Model.UserRole == UserType.Vendor && vendor.UserId == Model.CurrentUser?.Id)
+                                        {
+                                            <a href="@Url.Action("Profile", "Vendor", new { id = vendor.Id })"
+                                                class="btn btn-secondary mt-2">Edit</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
         </div>
-    </div>
+    </form>
 </div>

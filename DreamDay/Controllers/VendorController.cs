@@ -15,7 +15,7 @@ namespace DreamDay.Controllers
         public ApplicationDbContext Context { get; } = context;
 
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult Index(string? searchQuery, List<string>? SelectedCategories)
         {
             List<Vendor> venueData = [];
             try
@@ -24,19 +24,34 @@ namespace DreamDay.Controllers
                     .Vendors
                     .Include(x => x.User)
                     .Include(x => x.Venues)
-                    // .Include(x => x.PlannerVendors)
-                    // .Include(x => x.ContactInfo)
                     .Include(x => x.VendorType)
-                    // .Include(x => x.WeddingVendors)
-                    // .Include(x => x.Planner)
                     .ToList();
             }
             catch (FormatException ex)
             {
-                // Log the error or handle it as needed
-                // For now, return an error view or message
                 return Content("Data error: One or more Vendor records have invalid GUIDs. Please check your database. " + ex.Message);
             }
+
+            // Filtering by search query
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                venueData = venueData
+                    .Where(v => v.VendorName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            // Filtering by selected categories
+            if (SelectedCategories != null && SelectedCategories.Any())
+            {
+                venueData = venueData
+                    .Where(v => v.VendorType != null && v.VendorType?.Category != null)
+                    // .Where(v=> )
+                    .Where(v => SelectedCategories.Contains(v.VendorType.Category.ToString()))
+                    .ToList();
+            }
+
+            ViewBag.SelectedCategories = SelectedCategories ?? new List<string>();
+            ViewBag.SearchQuery = searchQuery ?? "";
 
             return View(new VendorPageModel
             {

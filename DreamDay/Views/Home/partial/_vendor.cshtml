@@ -9,14 +9,25 @@
     var upcomingEventsCount = CurrentVendor?.WeddingVendors?.Count(e => e.Wedding.WeddingDate >= DateTime.Now) ?? 0;
 
     @* var eventsThisMonth = 123; *@
-    var newInquiriesCount = 123;
-    var revenue = 12345;
+    @* var newInquiriesCount = 123; *@
+    var revenue = CurrentVendor?.WeddingVendors?.Select(e=>e.PriceRange).Sum() ?? 0;
 
-    var upcomingEventList = new List<dynamic> {
+    @* var upcomingEventList = CurrentVendor?.WeddingVendors?
+        .Where(e => e.Wedding.WeddingDate >= DateTime.Now)
+        .Select(e => new { Name = e.Wedding.WeddingName, Date = e.Wedding.WeddingDate.ToString("MMMM dd, yyyy"), Venue = e.Wedding.Venue })
+        .ToList() ?? new List<dynamic>(); *@
+
+    var upcomingEventList = CurrentVendor?.WeddingVendors?.Where(e => e.Wedding.WeddingDate.Month == DateTime.Now.Month && e.Wedding.WeddingDate.Year == DateTime.Now.Year).Select(e => new {
+        Name = e.Wedding.WeddingName,
+        Date = e.Wedding.WeddingDate.ToString("MMMM dd, yyyy"),
+        Venue = e.Wedding.Venue
+    }).ToList();
+
+    @* var upcomingEventList = new List<dynamic> {
         new { Name = "Sarah & David's Wedding", Date = "June 15, 2024", Venue = "Crystal Palace" },
         new { Name = "Emma & James's Wedding", Date = "July 8, 2024", Venue = "Sunset Beach Resort" },
         new { Name = "Lisa & John's Wedding", Date = "August 22, 2024", Venue = "Mountain View Gardens" }
-    };
+    }; *@
 
     var inquiryList = new List<dynamic> {
         new { CoupleName = "Alex & Maria", Details = "Oct 12, 2024 • Photography", Message = "Interested in your full-day wedding package. Can we schedule a consultation?" },
@@ -41,6 +52,7 @@
             <div class="d-flex align-items-center justify-content-between">
                 <div>
                     <h2 class="fw-bold text-dark">@vendorName</h2>
+
                     <span class="badge rounded-pill bg-success text-white mt-2">
                         Verified Vendor
                     </span>
@@ -50,7 +62,7 @@
                     <div class="display-6 fw-bold text-info">@upcomingEventsCount</div>
                 </div>
             </div>
-            <div class="mt-4 row row-cols-1 row-cols-sm-3 g-3 text-center">
+            <div class="mt-4 row row-cols-1 row-cols-sm-2 g-3 text-center">
                 <div class="col">
                     <div class="bg-white p-3 rounded shadow-sm">
                         <i class="bi bi-calendar-event fs-3 text-info"></i>
@@ -58,13 +70,13 @@
                         <div class="fw-semibold">@eventsThisMonth</div>
                     </div>
                 </div>
-                <div class="col">
+                @* <div class="col">
                     <div class="bg-white p-3 rounded shadow-sm">
                         <i class="bi bi-people fs-3 text-success"></i>
                         <div class="mt-2 small text-muted">Inquiries</div>
                         <div class="fw-semibold">@newInquiriesCount</div>
                     </div>
-                </div>
+                </div> *@
                 <div class="col">
                     <div class="bg-white p-3 rounded shadow-sm">
                         <i class="bi bi-currency-dollar fs-3 text-purple"></i> @* Assuming purple is a custom theme color or use another standard one *@
@@ -76,14 +88,20 @@
         </div>
 
         <div class="row g-4"> @* grid grid-cols-1 md:grid-cols-3 gap-6 *@
-            <div class="col-md-8"> @* md:col-span-2 *@
+            <div class="col-md"> @* md:col-span-2 *@
                 <div class="card">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0">Upcoming Events</h5>
-                        <button type="button" class="btn btn-outline-primary btn-sm">View Calendar</button>
+                        @* <button type="button" class="btn btn-outline-primary btn-sm">View Calendar</button> *@
                     </div>
                     <div class="card-body p-0">
                         <ul class="list-group list-group-flush">
+                            @if (upcomingEventList == null || !upcomingEventList.Any())
+                            {
+                                <li class="list-group-item text-center py-5">
+                                    <div class="text-muted">No upcoming events this month.</div>
+                                </li>
+                            }
                             @foreach (var ev in upcomingEventList)
                             {
                                 <li class="list-group-item py-3">
@@ -106,7 +124,7 @@
                 </div>
             </div>
 
-            <div class="col-md-4"> @* Remaining column *@
+            @* <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">Inquiries</h5>
@@ -115,7 +133,8 @@
                         <ul class="list-unstyled">
                             @foreach (var inquiry in inquiryList)
                             {
-                                <li class="p-3 bg-warning-subtle rounded-3 mb-3"> @* bg-yellow-50 rounded-lg, mb-3 for space-y effect *@
+                                <li class="p-3 bg-warning-subtle rounded-3 mb-3">
+                                    <!-- bg-yellow-50 rounded-lg p-6 mb-4 -->
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div>
                                             <p class="fw-semibold mb-0">@inquiry.CoupleName</p>
@@ -133,7 +152,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </div> *@
         </div>
     </div>
 }

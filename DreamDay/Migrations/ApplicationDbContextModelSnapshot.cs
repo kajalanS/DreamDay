@@ -232,19 +232,19 @@ namespace DreamDay.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("2bb5e19d-bd07-4b7c-80bf-7448cda47fa7"),
+                            Id = new Guid("87a9b1b4-9189-4f47-b1b1-34491e5bcef8"),
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = new Guid("a572c213-71fc-4d1d-9e53-ecfa2272d8ab"),
+                            Id = new Guid("efbd35cf-b80d-49bd-839c-562992edfe1a"),
                             Name = "Couple",
                             NormalizedName = "COUPLE"
                         },
                         new
                         {
-                            Id = new Guid("fa1f9ef4-f907-4986-b13e-5dcd0b1ca07f"),
+                            Id = new Guid("c8f693c0-1526-4a85-8fa6-56400391b857"),
                             Name = "Vendor",
                             NormalizedName = "VENDOR"
                         });
@@ -347,36 +347,36 @@ namespace DreamDay.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("af11b6cf-317c-46c0-a5ff-c4fcfce1cb80"),
+                            Id = new Guid("c1404082-a976-427d-a9c8-ab4422314390"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "19aa0fae-7ca3-4ab8-b4dd-2607cc357068",
+                            ConcurrencyStamp = "353df798-53c4-4bb8-bbdb-5266da766d8f",
                             Email = "admin@app.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "ADMIN@APP.COM",
                             NormalizedUserName = "ADMIN",
-                            PasswordHash = "AQAAAAIAAYagAAAAEKrM3U9U/CFx9KKG7/0/B9CuktxJQTsn9P6nqX2m2ZevEeI6cHcB5+mARU6M0Yec7w==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEG3FzSHVz2+LIeJub58I2LoD8YvSfrYRP0iZP97ZCdom/RAd/JoQC4A8fKNskHg0sA==",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2025, 5, 24, 17, 29, 46, 6, DateTimeKind.Local).AddTicks(4591),
-                            SecurityStamp = "086df827-ca6a-40dc-8296-6f388b5be9e7",
+                            RegistrationDate = new DateTime(2025, 5, 24, 19, 18, 10, 141, DateTimeKind.Local).AddTicks(8108),
+                            SecurityStamp = "f4ae1dba-c8ec-4475-b9a8-b100d07fb946",
                             Status = 1,
                             TwoFactorEnabled = false,
                             UserName = "Admin"
                         },
                         new
                         {
-                            Id = new Guid("4762a68f-4f25-481c-91e6-4df75da3454f"),
+                            Id = new Guid("7af6dd06-07ac-4875-b7bf-bcf1e3db8a8a"),
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f38fd24e-7eed-4856-a262-4f58a057db97",
+                            ConcurrencyStamp = "440a98d4-196c-4188-96b8-3c516ce1390f",
                             Email = "sam@app.com",
                             EmailConfirmed = true,
                             LockoutEnabled = false,
                             NormalizedEmail = "SAM@APP.COM",
                             NormalizedUserName = "COUPLE",
-                            PasswordHash = "AQAAAAIAAYagAAAAEDK4RxIz/UY5qgiwKekMV9N/VLgBcFTna8aLvzfWPt1N7LEKPPZOYINKqXf9uYpemA==",
+                            PasswordHash = "AQAAAAIAAYagAAAAEMWMtCTUhljSOmPQSQYwbNawmulfdPUpVwHC2Q6DBrhQW5x29+VwKNwVOo6Xl5UEhg==",
                             PhoneNumberConfirmed = false,
-                            RegistrationDate = new DateTime(2025, 5, 24, 17, 29, 46, 106, DateTimeKind.Local).AddTicks(8476),
-                            SecurityStamp = "4d7ebde0-49b8-4a8b-ad94-ad83b52632ea",
+                            RegistrationDate = new DateTime(2025, 5, 24, 19, 18, 10, 258, DateTimeKind.Local).AddTicks(9126),
+                            SecurityStamp = "2c5e3000-189c-4e30-9793-b17696cedc7f",
                             Status = 1,
                             TwoFactorEnabled = false,
                             UserName = "Couple"
@@ -482,13 +482,13 @@ namespace DreamDay.Migrations
                     b.HasData(
                         new
                         {
-                            UserId = new Guid("af11b6cf-317c-46c0-a5ff-c4fcfce1cb80"),
-                            RoleId = new Guid("2bb5e19d-bd07-4b7c-80bf-7448cda47fa7")
+                            UserId = new Guid("c1404082-a976-427d-a9c8-ab4422314390"),
+                            RoleId = new Guid("87a9b1b4-9189-4f47-b1b1-34491e5bcef8")
                         },
                         new
                         {
-                            UserId = new Guid("4762a68f-4f25-481c-91e6-4df75da3454f"),
-                            RoleId = new Guid("a572c213-71fc-4d1d-9e53-ecfa2272d8ab")
+                            UserId = new Guid("7af6dd06-07ac-4875-b7bf-bcf1e3db8a8a"),
+                            RoleId = new Guid("efbd35cf-b80d-49bd-839c-562992edfe1a")
                         });
                 });
 
@@ -530,12 +530,10 @@ namespace DreamDay.Migrations
                     b.Property<Guid?>("PlannerId")
                         .HasColumnType("char(36)");
 
-                    b.Property<string>("PriceRange")
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                    b.Property<decimal>("PriceRange")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<int>("Status")
-                        .HasMaxLength(50)
                         .HasColumnType("int");
 
                     b.Property<Guid>("UserId")
@@ -625,187 +623,187 @@ namespace DreamDay.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("5b083d4f-70d0-4182-abcc-04f47e90dd0e"),
+                            Id = new Guid("0ae11686-a444-4a31-8c1d-8687b35ddf6e"),
                             Category = 1,
                             VendorTypeName = "Photographer"
                         },
                         new
                         {
-                            Id = new Guid("c6905b71-ee96-44b3-9a58-3977e8c7084d"),
+                            Id = new Guid("e8d806ac-ac1e-4215-9843-0b2b8c798928"),
                             Category = 1,
                             VendorTypeName = "Videographer"
                         },
                         new
                         {
-                            Id = new Guid("a7f7adb2-84be-4763-91b5-7c3b32c1df85"),
+                            Id = new Guid("3a06f3fe-7ea0-41a2-a4e3-924eb960db57"),
                             Category = 1,
                             VendorTypeName = "Drone Photographer"
                         },
                         new
                         {
-                            Id = new Guid("b9387807-7fb4-4709-bec5-6792628e67c9"),
+                            Id = new Guid("428da178-00f0-4e18-9f86-7899866ab585"),
                             Category = 2,
                             VendorTypeName = "DJ"
                         },
                         new
                         {
-                            Id = new Guid("29f230fc-7efe-40a4-b4db-0c2d0b87638e"),
+                            Id = new Guid("3ddb04d7-33be-4e4b-a906-9ce6f5432064"),
                             Category = 2,
                             VendorTypeName = "Live Band"
                         },
                         new
                         {
-                            Id = new Guid("7da6f54b-4ba3-4659-a1f2-55fc9afdf357"),
+                            Id = new Guid("04593b1b-0025-4886-ae1b-e791085d1e13"),
                             Category = 3,
                             VendorTypeName = "Invitations & Stationery"
                         },
                         new
                         {
-                            Id = new Guid("c6d97e93-7ec5-4f74-aa35-0ef47c96d6e2"),
+                            Id = new Guid("a012a666-b4f9-4cbc-b7f0-abd2163cf7fc"),
                             Category = 3,
                             VendorTypeName = "Favors & Gifts"
                         },
                         new
                         {
-                            Id = new Guid("ec7377b7-91c7-4e42-a83d-2692effef6c5"),
+                            Id = new Guid("e574a93c-97c6-45b1-a5fe-c07614339f65"),
                             Category = 4,
                             VendorTypeName = "Bridal Gown Designer"
                         },
                         new
                         {
-                            Id = new Guid("f4d222ef-9181-47f5-9ab8-1f135aac15e9"),
+                            Id = new Guid("1bfdf3e9-d3af-4131-bff8-fb1f641c422e"),
                             Category = 4,
                             VendorTypeName = "Jewelry Boutique"
                         },
                         new
                         {
-                            Id = new Guid("b940af13-99b4-4db8-9e4b-1c3358eb7f34"),
+                            Id = new Guid("63a1f3ab-1c51-405e-b6c2-9925c39c98ad"),
                             Category = 5,
                             VendorTypeName = "Makeup Artist"
                         },
                         new
                         {
-                            Id = new Guid("978dfdbe-1d66-4708-a1db-3dedec221d1c"),
+                            Id = new Guid("ad474e49-9090-4508-8792-1215716afa9f"),
                             Category = 5,
                             VendorTypeName = "Hair Stylist"
                         },
                         new
                         {
-                            Id = new Guid("940943cc-fa56-4936-a0c8-79c7102f2efe"),
+                            Id = new Guid("1485ac09-540a-4dc5-94ef-e6f51734dabd"),
                             Category = 6,
                             VendorTypeName = "Caterer"
                         },
                         new
                         {
-                            Id = new Guid("4e1f626c-f109-477b-9c22-5cc3a5b4e4e1"),
+                            Id = new Guid("306bf9cc-6ac1-4ef6-951c-ceb070a4d3c4"),
                             Category = 6,
                             VendorTypeName = "Open-Bar Service"
                         },
                         new
                         {
-                            Id = new Guid("d4d91247-5de9-4f0f-9e39-c69b47b85f28"),
+                            Id = new Guid("42fd31e5-9163-4004-8097-86ab30ffe81d"),
                             Category = 7,
                             VendorTypeName = "Limousine Service"
                         },
                         new
                         {
-                            Id = new Guid("92a43de7-7c6f-4583-88ee-c9ecfc6f7bc6"),
+                            Id = new Guid("825b63b6-e86d-4f2b-abfd-8b2025147805"),
                             Category = 7,
                             VendorTypeName = "Vintage Car Rental"
                         },
                         new
                         {
-                            Id = new Guid("e7533968-f482-4ff9-921e-dcea4b2b3b26"),
+                            Id = new Guid("1c03dc5a-252e-4101-9a16-15bbc15cbd60"),
                             Category = 8,
                             VendorTypeName = "Floral Arrangements"
                         },
                         new
                         {
-                            Id = new Guid("42e06627-9738-4398-91bf-2aadfcf20662"),
+                            Id = new Guid("32a68fec-39ab-4e74-87e3-405b46796d37"),
                             Category = 8,
                             VendorTypeName = "Event Draping"
                         },
                         new
                         {
-                            Id = new Guid("d5e7f8a3-eb62-45ba-be0e-409a622f7366"),
+                            Id = new Guid("65f3e2dc-e201-4fff-9876-dc6c8c7f2667"),
                             Category = 9,
                             VendorTypeName = "Wedding Cake Designer"
                         },
                         new
                         {
-                            Id = new Guid("17e96843-af99-400e-b740-4c3336c76cc6"),
+                            Id = new Guid("3292f866-7b0c-4de6-a32e-e7624bdb8124"),
                             Category = 9,
                             VendorTypeName = "Dessert Station"
                         },
                         new
                         {
-                            Id = new Guid("e36071f2-62b1-41dc-b657-f0b6db0db762"),
+                            Id = new Guid("6e3d496f-faea-48ce-9083-4a1ec60c270c"),
                             Category = 10,
                             VendorTypeName = "Day-Of Coordinator"
                         },
                         new
                         {
-                            Id = new Guid("bac8315e-fadd-4d39-be0a-00d5dd946311"),
+                            Id = new Guid("c95e0ad9-cade-40fb-9f42-3d586606231e"),
                             Category = 10,
                             VendorTypeName = "Full-Service Planner"
                         },
                         new
                         {
-                            Id = new Guid("5244c90c-b8db-48e0-b146-6fd0da2269c9"),
+                            Id = new Guid("e9d67d93-a2ef-4a2e-9227-dc760b1bffbb"),
                             Category = 11,
                             VendorTypeName = "String Quartet"
                         },
                         new
                         {
-                            Id = new Guid("457c0aa9-fee6-4502-81ff-c96efc551bd7"),
+                            Id = new Guid("94dfc6fc-1af6-4d84-8012-72ed64deb4ae"),
                             Category = 11,
                             VendorTypeName = "Fire Dancers"
                         },
                         new
                         {
-                            Id = new Guid("6ad4715e-964c-4f4f-be7c-9ef301c83f94"),
+                            Id = new Guid("0bfc12e1-f919-4713-a6fc-1218b9c64df8"),
                             Category = 12,
                             VendorTypeName = "Lighting Designer"
                         },
                         new
                         {
-                            Id = new Guid("f29d04b2-2d73-4aa1-b2ad-897f97dddfa2"),
+                            Id = new Guid("e066b176-1b49-4917-a17b-31ec9f6a202f"),
                             Category = 12,
                             VendorTypeName = "Sound Engineer"
                         },
                         new
                         {
-                            Id = new Guid("bdc3626f-7780-4a33-b79a-344234187b65"),
+                            Id = new Guid("435c9530-31fa-4bef-8754-987a9178c935"),
                             Category = 13,
                             VendorTypeName = "Event Security"
                         },
                         new
                         {
-                            Id = new Guid("565c681c-3db6-4a3b-bbbc-ea8736fa5dda"),
+                            Id = new Guid("e933fab9-d88b-437e-b9f0-8f4b1c8b37d4"),
                             Category = 13,
                             VendorTypeName = "First-Aid Staff"
                         },
                         new
                         {
-                            Id = new Guid("eecb4776-746c-406c-8f49-f3d69352bf2a"),
+                            Id = new Guid("034aa76c-d978-4862-ae89-0451d2a9dfe6"),
                             Category = 14,
                             VendorTypeName = "Chair & Table Rental"
                         },
                         new
                         {
-                            Id = new Guid("8e2cea40-fc73-4e9c-b61f-fc3488cb71af"),
+                            Id = new Guid("5d53f2ec-dc34-4ee4-91ef-654df7ee5795"),
                             Category = 14,
                             VendorTypeName = "Tent Rental"
                         },
                         new
                         {
-                            Id = new Guid("f421f65a-6cb9-4d6b-8d51-76da84a39ce6"),
+                            Id = new Guid("b1f59c68-ec92-4a79-baaf-0c271bab8ab7"),
                             Category = 15,
                             VendorTypeName = "Banquet Hall"
                         },
                         new
                         {
-                            Id = new Guid("aa401572-adb7-43f2-8e46-e5e7039da5ce"),
+                            Id = new Guid("4493bced-7c61-4321-a601-9a75891a7f6c"),
                             Category = 15,
                             VendorTypeName = "Beachfront Venue"
                         });
@@ -835,9 +833,8 @@ namespace DreamDay.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("varchar(255)");
 
-                    b.Property<string>("PriceRange")
-                        .HasMaxLength(50)
-                        .HasColumnType("varchar(50)");
+                    b.Property<decimal>("PriceRange")
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<Guid?>("VendorId")
                         .HasColumnType("char(36)");
@@ -935,6 +932,10 @@ namespace DreamDay.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("char(36)");
+
+                    b.Property<decimal>("PriceRange")
+                        .HasMaxLength(100)
+                        .HasColumnType("decimal(65,30)");
 
                     b.Property<Guid>("VendorId")
                         .HasColumnType("char(36)");

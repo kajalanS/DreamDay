@@ -11,7 +11,7 @@ namespace DreamDay.Models.View
         public string? WebsiteURL { get; set; }
         public string ImageURL { get; set; } = "/img/vendor-default.png";
         public VendorTypeCategory Category { get; set; } = default!;
-        public string? PriceRange { get; set; }
+        public decimal PriceRange { get; set; }
     }
 
     public class VendorProfilePageModel : BaseViewModel

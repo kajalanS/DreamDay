@@ -109,7 +109,6 @@ namespace DreamDay.Models
         /// <summary>
         /// Gets or sets the price range for the vendor's services.
         /// </summary>
-        [MaxLength(100)]
-        public string? PriceRange { get; set; }
+        public decimal PriceRange { get; set; }
     }
 }

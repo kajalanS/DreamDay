@@ -20,7 +20,21 @@ namespace DreamDay.Controllers
         public IActionResult Index()
         {
             var authenticated = _signInManager.IsSignedIn(User);
-            var user = _userManager.GetUserAsync(User).Result;
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out _))
+            {
+                return View(null);
+            }
+
+            var userId = Guid.Parse(userIdString);
+            var user = Context.Users
+                .Include(u => u.Profile)
+                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Budget)
+                .Include(u => u.Planner)
+                .Include(u => u.Vendor)
+                .Where(u => u.Id == userId)
+                .FirstOrDefault();
+
             if (user == null)
             {
                 return View(null);
@@ -39,57 +53,64 @@ namespace DreamDay.Controllers
                 .Include(u => u.Profile)
                 .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Budget)
                 .Include(u => u.Planner)
-                .Include(u => u.Vendor)
+                .Include(u => u.Vendor)?.ThenInclude(v => v.WeddingVendors)?.ThenInclude(v => v.Wedding)?.ThenInclude(w => w.Vendors)
                 .FirstOrDefault(u => u.Id == user.Id);
 
-            if (user?.Couple != null && userRole == UserType.Couple)
-            {
-                return View(new HomePageModel
+            var guestList = Context.Guests.Include(g => g.Wedding)
+                .Where(g => g.Wedding!.Vendors!.Any(v => v.UserId == user.Id))
+                .ToList().Select(x => new GuestViewModel()
                 {
-                    Authenticated = authenticated,
-                    UserRole = (UserType?)userRole,
-                    CurrentUser = user,
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                    ErrorMessage = null
-                });
-            }
-            else if (userRole == UserType.Vendor)
-            {
+                    // Id = x.Id,
+                    Name = x.GuestName,
+                    Email = x.Email,
+                    // PhoneNumber = x.PhoneNumber,
+                    // RSVPStatus = x.RSVPStatus.ToString(),
+                    RsvpStatus = x.Status,
+                    // WeddingId = x.Wedding!.Id,
+                    // WeddingDate = x.Wedding.Date.ToString("MMMM dd, yyyy", CultureInfo.InvariantCulture),
+                    // WeddingVenue = x.Wedding.Venue?.Name ?? "No Venue Assigned"
+                }).ToList();
 
-                var guestList = Context.Guests.Include(g => g.Wedding)
-                            .Where(g => g.Wedding!.Vendors!.Any(v => v.UserId == user.Id))
-                            .ToList().Select(x => new GuestViewModel()
-                            {
-                                // Id = x.Id,
-                                Name = x.GuestName,
-                                Email = x.Email,
-                                // PhoneNumber = x.PhoneNumber,
-                                // RSVPStatus = x.RSVPStatus.ToString(),
-                                RsvpStatus = x.Status,
-                                // WeddingId = x.Wedding!.Id,
-                                // WeddingDate = x.Wedding.Date.ToString("MMMM dd, yyyy", CultureInfo.InvariantCulture),
-                                // WeddingVenue = x.Wedding.Venue?.Name ?? "No Venue Assigned"
-                            }).ToList();
-                return View(new HomePageModel
-                {
-                    Authenticated = authenticated,
-                    UserRole = (UserType?)userRole,
-                    CurrentUser = user,
-                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
-                    ErrorMessage = null,
-                    GuestList = new GuestListViewModel()
-                    {
-                        Guests = guestList,
-                    }
-                });
-            }
+            // if (user?.Couple != null && userRole == UserType.Couple)
+            // {
+            //     return View(new HomePageModel
+            //     {
+            //         Authenticated = authenticated,
+            //         UserRole = (UserType?)userRole,
+            //         CurrentUser = user,
+            //         RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+            //         ErrorMessage = null
+            //     });
+            // }
+            // else if (userRole == UserType.Vendor)
+            // {
+
+
+            //     return View(new HomePageModel
+            //     {
+            //         Authenticated = authenticated,
+            //         UserRole = (UserType?)userRole,
+            //         CurrentUser = user,
+            //         VendorData = new(),
+            //         RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+            //         ErrorMessage = null,
+            //         GuestList = new GuestListViewModel()
+            //         {
+            //             Guests = guestList,
+            //         }
+            //     });
+            // }
 
             return View(new HomePageModel
             {
                 Authenticated = authenticated,
                 UserRole = (UserType?)userRole,
                 CurrentUser = user,
-
+                GuestList = new GuestListViewModel()
+                {
+                    Guests = guestList,
+                },
+                // VendorData = vendorData,
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
                 ErrorMessage = null
             });

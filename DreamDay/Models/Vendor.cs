@@ -66,7 +66,6 @@ namespace DreamDay.Models
         /// Gets or sets the vendor's account status.
         /// </summary>
         [Required]
-        [MaxLength(50)]
         public VendorStatus Status { get; set; } = VendorStatus.Active;
 
         /// <summary>
@@ -106,5 +105,11 @@ namespace DreamDay.Models
         /// Navigation property for associated planner-vendor relationships.
         /// </summary>
         public ICollection<PlannerVendor>? PlannerVendors { get; set; }
+
+        /// <summary>
+        /// Gets or sets the price range for the vendor's services.
+        /// </summary>
+        [MaxLength(100)]
+        public string? PriceRange { get; set; }
     }
 }

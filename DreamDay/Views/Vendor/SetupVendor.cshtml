@@ -1,0 +1,60 @@
+﻿@model VendorCreateModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    ViewBag.Title = "Vendor Setup";
+}
+
+<h2>Vendor Setup</h2>
+
+@using (Html.BeginForm("SetupVendor", "Vendor", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="pb-3">
+        <div class="form-group pb-3">
+            @Html.LabelFor(m => m.VendorName)
+            @Html.TextBoxFor(m => m.VendorName, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.VendorName)
+        </div>
+
+        <div class="form-group pb-3">
+            @Html.LabelFor(m => m.Description)
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3 })
+            @Html.ValidationMessageFor(m => m.Description)
+        </div>
+
+        <div class="form-group pb-3">
+            @Html.LabelFor(m => m.WebsiteURL)
+            @Html.TextBoxFor(m => m.WebsiteURL, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.WebsiteURL)
+        </div>
+
+        <div class="form-group pb-3">
+            @Html.LabelFor(m => m.ImageURL)
+            @Html.TextBoxFor(m => m.ImageURL, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.ImageURL)
+        </div>
+
+        <div class="form-group pb-3">
+            @Html.LabelFor(m => m.PriceRange)
+            @Html.TextBoxFor(m => m.PriceRange, new { @class = "form-control", placeholder = "e.g. 1000" })
+            @Html.ValidationMessageFor(m => m.PriceRange)
+        </div>
+
+        <div class="form-group pb-3">
+            @Html.LabelFor(m => m.IsPlanner)
+            @Html.CheckBoxFor(m => m.IsPlanner)
+            @Html.ValidationMessageFor(m => m.IsPlanner)
+        </div>
+
+        <div class="form-group pb-3">
+            @Html.LabelFor(m => m.Category)
+            @Html.DropDownListFor(m => m.Category, Html.GetEnumSelectList<VendorTypeCategory>(), "Select Vendor Type", new {
+            @class = "form-control"
+                })
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary">Save</button>
+}

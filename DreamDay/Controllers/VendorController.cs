@@ -1,3 +1,4 @@
+using DreamDay.Attributes;
 using DreamDay.Data;
 using DreamDay.Database.Core.Enum;
 using DreamDay.Models;
@@ -7,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DreamDay.Controllers
 {
+    [FullUserAuthorize]
     public class VendorController(ApplicationDbContext context) : Controller
     {
         public ApplicationDbContext Context { get; } = context;
@@ -111,6 +113,63 @@ namespace DreamDay.Controllers
             // If ModelState is not valid, return the view with the model
             model.Vendor = vendor; // Pass the vendor object back to the view
             return View("ManageProfile", model);
+        }
+
+        [HttpGet]
+        [Route("Vendor/Setup")]
+        public IActionResult SetupVendor()
+        {
+            var user = Context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name);
+            if (user == null)
+            {
+                return NotFound("User not found.");
+            }
+
+            var vendor = Context.Vendors.FirstOrDefault(v => v.UserId == user.Id);
+            if (vendor != null)
+            {
+                return RedirectToAction("ManageProfile", new { id = vendor.Id });
+            }
+
+            return View(new VendorCreateModel());
+        }
+
+        [HttpPost]
+        [Route("Vendor/Setup")]
+        public IActionResult SetupVendor(VendorCreateModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = Context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name);
+                if (user == null)
+                {
+                    return NotFound("User not found.");
+                }
+
+                var vendor = new Vendor
+                {
+                    UserId = user.Id,
+                    VendorName = model.VendorName!,
+                    Description = model.Description,
+                    WebsiteURL = model.WebsiteURL,
+                    ImageURL = model.ImageURL,
+                    IsPlanner = model.IsPlanner,
+                    VendorType = new VendorType
+                    {
+                        Category = model.Category,
+                        VendorTypeName = model.Category.ToString()
+                    },
+                    PriceRange = model.PriceRange
+                };
+
+                Context.Vendors.AddRange(vendor);
+                Context.SaveChanges();
+
+                return RedirectToAction("ManageProfile", new { id = vendor.Id });
+            }
+
+            // If ModelState is not valid, return the view with the model
+            return View(model);
         }
     }
 }

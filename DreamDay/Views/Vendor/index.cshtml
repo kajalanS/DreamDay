@@ -1,9 +1,8 @@
-@* Assuming a model like: *@
-@* @model IEnumerable<DreamDay.Models.VendorViewModel> *@
+@model VendorPageModel
 @{
     ViewData["Title"] = "Vendors";
     // Mock data for demonstration, replace with actual model data
-    var vendors = new List<dynamic> {
+    @* var vendors = new List<dynamic> {
 new {
 Id = 1,
 Name = "Michael's Photography",
@@ -45,19 +44,26 @@ Id = 4,
 Name = "Harmony Wedding Music",
 Category = "Music",
 Rating = 4.6,
-ReviewCount = 78,
-Image = "https://images.unsplash.com/photo-1514320291840-2e0a9bf2a9ae?ixlib=rb-4.0.3",
-Description = "Live music performance for ceremonies and receptions.",
-Location = "Seattle, WA",
-PriceRange = "$$",
+  using Azure.Core;
+
+#line default
+#line hidden
+#nullable disable
+iceRange = "$$",
 Verified = false
 },
-};
-    // string searchQuery = ""; // This would typically come from request parameters
+}; *@
+    string searchQuery = "";
+    if (Context.Request.Query.ContainsKey("searchQuery"))
+    {
+        searchQuery = Context.Request.Query["searchQuery"].ToString();
+    }
+    var vendors = Model.Vendors;
+    if (!string.IsNullOrEmpty(searchQuery))
+    {
+        vendors = vendors.Where(v => v.VendorName.Contains(searchQuery, StringComparison.OrdinalIgnoreCase)).ToList();
+    }
 }
-
-@* Add a reference to Bootstrap Icons if you plan to use them: *@
-@* <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css"> *@
 
 <div class="container my-5">
     <div class="text-center mb-5">
@@ -99,124 +105,112 @@ Verified = false
                     <h5 class="card-title">Categories</h5>
                     @* Placeholder for category filters - Updated to checkboxes *@
                     <div class="mb-3">
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="photography" id="catPhotography">
-                            <label class="form-check-label" for="catPhotography">
-                                Photography
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="florist" id="catFlorist">
-                            <label class="form-check-label" for="catFlorist">
-                                Florist
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="catering" id="catCatering">
-                            <label class="form-check-label" for="catCatering">
-                                Catering
-                            </label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="music" id="catMusic">
-                            <label class="form-check-label" for="catMusic">
-                                Music
-                            </label>
-                        </div>
+                        @foreach (var category in Html.GetEnumSelectList<VendorTypeCategory>())
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" value="@category.Value"
+                                    id="cat@category.Id">
+                                <label class="form-check-label" for="cat@category.Id">
+                                    @category.Text
+                                </label>
+                            </div>
+                        }
                     </div>
                     <hr />
-                    <h5 class="card-title">Location</h5>
+
                     @* Placeholder for location filter *@
-                    <select class="form-select mb-3">
+                    @* <h5 class="card-title">Location</h5> *@
+                    @* <select class="form-select mb-3">
                         <option selected>All Locations</option>
                         <option value="sf">San Francisco, CA</option>
                         <option value="la">Los Angeles, CA</option>
                         <option value="sea">Seattle, WA</option>
                     </select>
-                    <hr />
-                    <h5 class="card-title">Price Range</h5>
+                    <hr /> *@
+
                     @* Placeholder for price range filter *@
-                    <select class="form-select mb-3">
+                    @* <h5 class="card-title">Price Range</h5> *@
+                    @* <select class="form-select mb-3">
                         <option selected>All Prices</option>
                         <option value="1">$</option>
                         <option value="2">$$</option>
                         <option value="3">$$$</option>
                     </select>
-                    <hr />
-                    <h5 class="card-title">Rating</h5>
+                    <hr /> *@
+
                     @* Placeholder for rating filter *@
+                    @* <h5 class="card-title">Rating</h5>
                     <select class="form-select">
                         <option selected>Any Rating</option>
                         <option value="4">4 Stars & Up</option>
                         <option value="3">3 Stars & Up</option>
-                    </select>
+                    </select> *@
                 </div>
             </div>
         </div>
 
         <!-- Vendor Grid -->
         <div class="col-md-9">
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                @foreach (var vendor in vendors) @* Replace 'vendors' with Model if using a strongly-typed model *@
+            @if (vendors == null || !vendors.Any())
+            {
+                if (searchQuery != null && !string.IsNullOrEmpty(searchQuery) && !vendors.Any())
                 {
-                    <div class="col">
-                        <div class="card h-100 shadow-sm">
-                            <img src="@vendor.Image" class="card-img-top" alt="@vendor.Name"
-                                style="height: 200px; object-fit: cover;">
-                            <div class="card-body d-flex flex-column">
-                                <h5 class="card-title">@vendor.Name</h5>
-                                <p class="card-text"><small class="text-muted">@vendor.Category</small></p>
-
-                                @if (vendor.Verified)
-                                {
-                                    <span class="badge bg-success mb-2 align-self-start">Verified</span>
-                                }
-
-                                <p class="card-text flex-grow-1">@vendor.Description</p>
-
-                                <div class="mt-auto">
-                                    <p class="card-text mb-1"><small class="text-muted">@vendor.Location</small></p>
-                                    <p class="card-text mb-1"><strong>Price:</strong> @vendor.PriceRange</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div>
-                                            @for (int i = 0; i < 5; i++)
-                                            {
-                                                if (i < Math.Floor(vendor.Rating))
-                                                {
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-star-fill text-warning"
-                                                        viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                                                    </svg>
-                                                }
-                                                else if (i < vendor.Rating && (vendor.Rating - i) > 0.25)
-                                                {
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-star-half text-warning"
-                                                        viewBox="0 0 16 16">
-                                                        <pa t h
-                                                            d="M5.354 5.119 7.538.792A.516.516 0 0 1 8 .5c.183 0 .366.097.465.292l2.184 4.327 4.898.696A.537.537 0 0 1 16 6.32a.548.548 0 0 1-.17.445l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256a.5.5 0 0 1-.146.05c-.342.06-.668-.254-.6-.642l.83-4.73L.173 6.765a.55.55 0 0 1-.172-.403.58.58 0 0 1 .085-.302.513.513 0 0 1 .37-.245l4.898-.696zM8 12.027a.5.5 0 0 1 .232.056l3.686 1.894-.694-3.957a.565.565 0 0 1 .162-.505l2.907-2.77-4.052-.576a.525.525 0 0 1-.393-.288L8.001 2.223 8 2.226v9.8 z" />
-                                                    </svg>
-                                                }
-                                                else
-                                                {
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                        fill="currentColor" class="bi bi-star text-warning" viewBox="0 0 16 16">
-                                                        <path
-                                                            d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898-.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z" />
-                                                    </svg>
-                                                }
-                                            }
-                                            <span class="ms-1">@vendor.Rating (@vendor.ReviewCount reviews)</span>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <div class="alert alert-warning" role="alert">
+                                No vendors found for "<strong>@searchQuery</strong>". Please try a different search term.
                             </div>
                         </div>
                     </div>
                 }
-            </div>
+                else
+                {
+                    <div class="row mb-4">
+                        <div class="col-12 text-center">
+                            <div class="alert alert-info" role="alert">
+                                No vendors available at the moment. Please check back later.
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+                    @foreach (var vendor in vendors) @* Replace 'vendors' with Model if using a strongly-typed model *@
+                    {
+                        <div class="col">
+                            <div class="card h-100 shadow-sm">
+                                <img src="@vendor.ImageURL" class="card-img-top" alt="@vendor.VendorName"
+                                    style="height: 200px; object-fit: cover;">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title">@vendor.VendorName</h5>
+                                    <p class="card-text"><small class="text-muted">@vendor.VendorType.Category</small></p>
+
+                                    @if (vendor.Status == VendorStatus.Active)
+                                    {
+                                        <span class="badge bg-success mb-2 align-self-start">Active</span>
+                                    }
+
+                                    <p class="card-text flex-grow-1">@vendor.Description</p>
+
+                                    @if (Model.UserRole == UserType.Couple)
+                                    {
+                                        <a href="@Url.Action("Details", "Vendor", new { id = vendor.Id })"
+                                            class="btn btn-primary mt-2">View Details</a>
+                                    }
+                                    else if (Model.UserRole == UserType.Vendor && vendor.UserId == Model.CurrentUser?.Id)
+                                    {
+                                        <a href="@Url.Action("Edit", "Vendor", new { id = vendor.Id })"
+                                            class="btn btn-secondary mt-2">Edit</a>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 </div>

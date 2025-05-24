@@ -1,5 +1,6 @@
 using DreamDay.Data;
 using DreamDay.Database.Core.Enum;
+using DreamDay.Models;
 using DreamDay.Models.View;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,16 +14,26 @@ namespace DreamDay.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            var venueData = Context
-                .Vendors
-                .Include(x => x.User)
-                .Include(x => x.Venues)
-                .Include(x => x.PlannerVendors)
-                // .Include(x => x.ContactInfo)
-                .Include(x => x.VendorType)
-                .Include(x => x.WeddingVendors)
-                // .Include(x => x.Planner)
-                .ToList();
+            List<Vendor> venueData = [];
+            try
+            {
+                venueData = Context
+                    .Vendors
+                    .Include(x => x.User)
+                    .Include(x => x.Venues)
+                    // .Include(x => x.PlannerVendors)
+                    // .Include(x => x.ContactInfo)
+                    .Include(x => x.VendorType)
+                    // .Include(x => x.WeddingVendors)
+                    // .Include(x => x.Planner)
+                    .ToList();
+            }
+            catch (FormatException ex)
+            {
+                // Log the error or handle it as needed
+                // For now, return an error view or message
+                return Content("Data error: One or more Vendor records have invalid GUIDs. Please check your database. " + ex.Message);
+            }
 
             return View(new VendorPageModel
             {
@@ -30,6 +41,7 @@ namespace DreamDay.Controllers
                 UserRole = User.IsInRole(UserType.Admin.ToString()) ? UserType.Admin : User.IsInRole(UserType.Couple.ToString()) ? UserType.Couple : UserType.Vendor,
                 CurrentUser = Context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name),
                 Vendors = venueData,
+                VendorTypes = Context.VendorTypes.ToList(),
                 RequestId = HttpContext.TraceIdentifier
             });
         }

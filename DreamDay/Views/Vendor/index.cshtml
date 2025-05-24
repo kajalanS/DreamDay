@@ -3,6 +3,11 @@
     ViewData["Title"] = "Vendors";
 
     string searchQuery = "";
+    string selectedCategories = "";
+    if (Context.Request.Query.ContainsKey("SelectedCategories"))
+    {
+        selectedCategories = Context.Request.Query["SelectedCategories"].ToString();
+    }
     if (Context.Request.Query.ContainsKey("searchQuery"))
     {
         searchQuery = Context.Request.Query["searchQuery"].ToString();
@@ -57,9 +62,9 @@
                         @foreach (var category in Html.GetEnumSelectList<VendorTypeCategory>())
                         {
                             <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="@category.Value"
-                                    id="cat@category.Id">
-                                <label class="form-check-label" for="cat@category.Id">
+                                <input class="form-check-input" name="SelectedCategories[]" type="checkbox" value="@category.Value"
+                                    id="@category.Value">
+                                <label class="form-check-label" name="SelectedCategories[]" for="@category.Value">
                                     @category.Text
                                 </label>
                             </div>

@@ -28,17 +28,60 @@ namespace DreamDay.Controllers
 
             ViewBag.Authenticated = authenticated;
             var currentUser = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
-            var userRole = Enum.Parse(typeof(UserType), currentUser, true);
+            UserType userRole = currentUser != null
+                ? (UserType)Enum.Parse(typeof(UserType), currentUser, true)
+                : default;
 
             var isSetupCoupleAccount = Context.Couples.Any(c => c.UserId == user.Id);
             ViewBag.isSetup = isSetupCoupleAccount;
 
             user = Context.Users
                 .Include(u => u.Profile)
-                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)
+                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Budget)
                 .Include(u => u.Planner)
                 .Include(u => u.Vendor)
                 .FirstOrDefault(u => u.Id == user.Id);
+
+            if (user?.Couple != null && userRole == UserType.Couple)
+            {
+                return View(new HomePageModel
+                {
+                    Authenticated = authenticated,
+                    UserRole = (UserType?)userRole,
+                    CurrentUser = user,
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                    ErrorMessage = null
+                });
+            }
+            else if (userRole == UserType.Vendor && user.Vendor != null)
+            {
+                var guestList = Context.Guests.Include(g => g.Wedding)
+                            .Where(g => g.Wedding!.Vendors!.Any(v => v.UserId == user.Id))
+                            .ToList().Select(x => new GuestViewModel()
+                            {
+                                // Id = x.Id,
+                                Name = x.GuestName,
+                                Email = x.Email,
+                                // PhoneNumber = x.PhoneNumber,
+                                // RSVPStatus = x.RSVPStatus.ToString(),
+                                RsvpStatus = x.Status,
+                                // WeddingId = x.Wedding!.Id,
+                                // WeddingDate = x.Wedding.Date.ToString("MMMM dd, yyyy", CultureInfo.InvariantCulture),
+                                // WeddingVenue = x.Wedding.Venue?.Name ?? "No Venue Assigned"
+                            }).ToList();
+                return View(new HomePageModel
+                {
+                    Authenticated = authenticated,
+                    UserRole = (UserType?)userRole,
+                    CurrentUser = user,
+                    RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
+                    ErrorMessage = null,
+                    GuestList = new GuestListViewModel()
+                    {
+                        Guests = guestList,
+                    }
+                });
+            }
 
             return View(new HomePageModel
             {

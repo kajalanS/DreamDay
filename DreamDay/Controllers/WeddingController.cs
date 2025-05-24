@@ -207,7 +207,7 @@ namespace DreamDay.Controllers
                     {
                         Category = "Wedding",
                         AllocatedAmount = decimal.Parse(WeddingData["totalBudget"]),
-                        ActualAmount = 0.00M,
+                        ActualAmount = decimal.Parse(WeddingData["totalBudget"]),
                         Description = "Total budget for the wedding"
                     },
                     WeddingDate = DateTime.Parse(WeddingData["date"]),

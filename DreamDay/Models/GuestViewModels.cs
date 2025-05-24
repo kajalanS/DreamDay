@@ -5,6 +5,7 @@ namespace DreamDay.Models
     public class GuestListViewModel
     {
         public Guid WeddingId { get; set; } // Added WeddingId
+        // public List<GuestViewModel> Guests { get; set; } = new List<GuestViewModel>();
         public List<GuestViewModel> Guests { get; set; } = new List<GuestViewModel>();
         public GuestStatsViewModel GuestStats { get; set; } = new GuestStatsViewModel();
         public string SearchQuery { get; set; } = string.Empty;

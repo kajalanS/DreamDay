@@ -160,7 +160,8 @@
                 Join thousands of happy couples who have planned their perfect day with us.
             </p>
             <div class="mt-4">
-                <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg">Create Free Account</a>
+                <a asp-area="Identity" asp-page="/Account/Register" class="btn btn-light btn-lg">Create Free Account</a>
+                @* <a asp-controller="Account" asp-action="Register" class="btn btn-light btn-lg">Create Free Account</a> *@
                 @* btn-light for contrast on dark bg *@
             </div>
         </div>

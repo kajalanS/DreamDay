@@ -59,13 +59,46 @@ namespace DreamDay.Controllers
                 Authenticated = User.Identity?.IsAuthenticated ?? false,
                 UserRole = User.IsInRole(UserType.Admin.ToString()) ? UserType.Admin : User.IsInRole(UserType.Couple.ToString()) ? UserType.Couple : UserType.Vendor,
                 CurrentUser = Context.Users.FirstOrDefault(u => u.UserName == User.Identity!.Name),
+
+                CompanyName = vendor.VendorName,
+                Description = vendor.Description,
+                ContactEmail = vendor.User.Email,
+                PhoneNumber = vendor.User.PhoneNumber,
+                WebsiteURL = vendor.WebsiteURL,
+
                 Vendor = vendor,
-                Vendors = Context.Vendors.ToList(),
-                Weddings = Context.Weddings.ToList(),
-                Venues = Context.Venues.ToList(),
-                PlannerVendors = Context.PlannerVendors.ToList(),
                 RequestId = HttpContext.TraceIdentifier
             });
+        }
+
+        [HttpPost]
+        [Route("Vendor/Profile/{id:guid}")]
+        public IActionResult UpdateProfile(Guid id, VendorProfilePageModel model)
+        {
+            var vendor = Context.Vendors
+                .Include(v => v.User) // Ensure User is included
+                .FirstOrDefault(v => v.Id == id);
+
+            if (vendor == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                vendor.VendorName = model.CompanyName!;
+                vendor.Description = model.Description;
+                vendor.User.Email = model.ContactEmail!;
+                vendor.User.PhoneNumber = model.PhoneNumber!;
+                vendor.WebsiteURL = model.WebsiteURL;
+
+                Context.SaveChanges();
+                return RedirectToAction("ManageProfile", new { id = vendor.Id });
+            }
+
+            // If ModelState is not valid, return the view with the model
+            model.Vendor = vendor; // Pass the vendor object back to the view
+            return View("ManageProfile", model);
         }
     }
 }

@@ -73,6 +73,17 @@ namespace DreamDay.Controllers
                     // WeddingVenue = x.Wedding.Venue?.Name ?? "No Venue Assigned"
                 }).ToList();
 
+
+            var vendor = Context.Vendors
+                .Include(x => x.User)
+                .Include(x => x.Venues)
+                .Include(x => x.PlannerVendors)
+                // .Include(x => x.ContactInfo)
+                // .Include(x => x.Planner);
+                .Include(x => x.VendorType)
+                .Include(x => x.WeddingVendors)
+                .ToList();
+
             // if (user?.Couple != null && userRole == UserType.Couple)
             // {
             //     return View(new HomePageModel
@@ -113,6 +124,17 @@ namespace DreamDay.Controllers
                     Guests = guestList,
                 },
                 // VendorData = vendorData,
+                VendorPage = new VendorPageModel()
+                {
+                    Vendors = vendor
+                },
+                AdminStates = new AdminStates()
+                {
+                    Couples = Context.Couples.Count(),
+                    WeddingThisMonth = Context.Weddings.Count(e => e.WeddingDate.Month == DateTime.Now.Month && e.WeddingDate.Year == DateTime.Now.Year),
+                    VerifiedVendor = Context.Vendors.Count(v => v.Status == VendorStatus.Active),
+                    PendingVendors = Context.Vendors.Count(v => v.Status == VendorStatus.Pending),
+                },
                 RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier,
                 ErrorMessage = null
             });

@@ -1,3 +1,8 @@
+@model HomePageModel
+@{
+    ViewBag.Title = "Admin Page";
+}
+
 <div class="space-y-6">
     <!-- Vendor Applications Card -->
     <div class="card mb-3">
@@ -6,21 +11,44 @@
         </div>
         <div class="card-body">
             <div class="divide-y divide-gray-200">
-                <div class="py-4 d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="font-medium">Elegant Flowers</h4>
-                        <p class="text-sm text-gray-500">
-                            Florist • Applied 2 days ago
-                        </p>
+                @if (Model.VendorPage.Vendors == null || !Model.VendorPage.Vendors.Any())
+                {
+                    <li class="list-group-item text-center py-5">
+                        <div class="text-muted">No Vendors Found!.</div>
+                    </li>
+                }
+                @foreach (var vendor in Model.VendorPage.Vendors)
+                {
+                    <div class="py-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="font-medium">@vendor?.VendorName</h4>
+                            <p class="text-sm text-gray-500">
+                                @vendor.VendorType?.Category
+                            </p>
+                        </div>
+                        <div class="space-x-2">
+                            @if (vendor?.Status == VendorStatus.Pending)
+                            {
+                                <a href="@Url.Action("Reject", "Vendor", new { id = vendor.Id })"
+                                    class="btn btn-outline-secondary btn-sm">Reject</a>
+                                <a href="@Url.Action("Approve", "Vendor", new { id = vendor.Id })"
+                                    class="btn btn-primary btn-sm">Approve</a>
+                            }
+                            else if (vendor?.Status == VendorStatus.Active)
+                            {
+                                <a href="@Url.Action("Reject", "Vendor", new { id = vendor.Id })"
+                                    class="btn btn-outline-secondary btn-sm">Reject</a>
+                            }
+                            else if (vendor?.Status == VendorStatus.Suspended)
+                            {
+                                @* <span class="text-warning">Suspended</span> *@
+                                <a href="@Url.Action("Approve", "Vendor", new { id = vendor.Id })"
+                                    class="btn btn-primary btn-sm">Reactivate</a>
+                            }
+                        </div>
                     </div>
-                    <div class="space-x-2">
-                        <button class="btn btn-outline-secondary btn-sm">
-                            Reject
-                        </button>
-                        <button class="btn btn-primary btn-sm">Approve</button>
-                    </div>
-                </div>
-                <hr />
+                }
+                @* <hr />
                 <div class="py-4 d-flex justify-content-between align-items-center">
                     <div>
                         <h4 class="font-medium">Golden Gate Catering</h4>
@@ -49,11 +77,11 @@
                         </button>
                         <button class="btn btn-primary btn-sm">Approve</button>
                     </div>
-                </div>
+                </div> *@
             </div>
         </div>
     </div>
-    <div class="row row-cols-1 row-cols-md-2 g-6">
+    <div class="row row-cols-1 g-6">
         <div class="col">
             <div class="card">
                 <div class="card-header">
@@ -63,25 +91,25 @@
                     <div class="row row-cols-2 g-4 text-center">
                         <div class="col">
                             <div class="p-4 bg-rose-50 rounded-lg">
-                                <p class="text-3xl font-bold text-rose-600">247</p>
+                                <p class="text-3xl font-bold text-rose-600">@Model.AdminStates?.Couples</p>
                                 <p class="text-sm text-gray-600">Active Couples</p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-4 bg-blue-50 rounded-lg">
-                                <p class="text-3xl font-bold text-blue-600">83</p>
+                                <p class="text-3xl font-bold text-blue-600">@Model.AdminStates?.VerifiedVendor</p>
                                 <p class="text-sm text-gray-600">Verified Vendors</p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-4 bg-green-50 rounded-lg">
-                                <p class="text-3xl font-bold text-green-600">52</p>
+                                <p class="text-3xl font-bold text-green-600">@Model.AdminStates?.WeddingThisMonth</p>
                                 <p class="text-sm text-gray-600">Weddings This Month</p>
                             </div>
                         </div>
                         <div class="col">
                             <div class="p-4 bg-purple-50 rounded-lg">
-                                <p class="text-3xl font-bold text-purple-600">18</p>
+                                <p class="text-3xl font-bold text-purple-600">@Model.AdminStates?.PendingVendors</p>
                                 <p class="text-sm text-gray-600">Pending Approvals</p>
                             </div>
                         </div>
@@ -89,7 +117,7 @@
                 </div>
             </div>
         </div>
-        <div class="col">
+        @* <div class="col">
             <div class="card">
                 <div class="card-header">
                     <h3 class="text-lg font-medium">Recent Activities</h3>
@@ -133,6 +161,6 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        </div> *@
     </div>
 </div>

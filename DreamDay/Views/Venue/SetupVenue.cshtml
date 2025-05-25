@@ -1,0 +1,42 @@
+@model VenueCreateModel
+@using Microsoft.AspNetCore.Mvc.Rendering
+
+@{
+    var isEdit = Model?.Id != Guid.Empty;
+    ViewBag.Title = isEdit ? "Update Venue" : "Create Venue";
+}
+
+
+<h2>@ViewBag.Title</h2>
+
+@using (Html.BeginForm("SetupVenue", "Venue", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @if (isEdit)
+    {
+        @Html.HiddenFor(m => m.Id)
+    }
+    <div class="form-group pb-3">
+        @Html.LabelFor(m => m.VenueName)
+        @Html.TextBoxFor(m => m.VenueName, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.VenueName, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group pb-3">
+        @Html.LabelFor(m => m.Address)
+        @Html.TextBoxFor(m => m.Address, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Address, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group pb-3">
+        @Html.LabelFor(m => m.Capacity)
+        @Html.TextBoxFor(m => m.Capacity, new { @class = "form-control", type = "number", min = "1" })
+        @Html.ValidationMessageFor(m => m.Capacity, "", new { @class = "text-danger" })
+    </div>
+    <div class="form-group pb-3">
+        @Html.LabelFor(m => m.Description)
+        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3 })
+        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+    </div>
+    <button type="submit" class="btn btn-primary">
+        @(isEdit ? "Update" : "Create")
+    </button>
+}

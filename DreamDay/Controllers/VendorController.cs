@@ -295,5 +295,37 @@ namespace DreamDay.Controllers
 
             return RedirectToAction("ManageProfile", new { id = vendorId });
         }
+
+        [HttpGet]
+        [Route("Vendor/Reject/{id:guid}")]
+        public IActionResult RejectVendor(Guid id)
+        {
+            var vendor = Context.Vendors.FirstOrDefault(v => v.Id == id);
+            if (vendor == null)
+            {
+                return NotFound("Vendor not found.");
+            }
+
+            vendor.Status = VendorStatus.Suspended;
+            Context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpGet]
+        [Route("Vendor/Approve/{id:guid}")]
+        public IActionResult ApproveVendor(Guid id)
+        {
+            var vendor = Context.Vendors.FirstOrDefault(v => v.Id == id);
+            if (vendor == null)
+            {
+                return NotFound("Vendor not found.");
+            }
+
+            vendor.Status = VendorStatus.Active;
+            Context.SaveChanges();
+
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

@@ -128,6 +128,7 @@ namespace DreamDay.Controllers
                 {
                     Vendors = vendor
                 },
+                Venues = Context.Venues.ToList(),
                 AdminStates = new AdminStates()
                 {
                     Couples = Context.Couples.Count(),

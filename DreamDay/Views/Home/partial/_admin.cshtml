@@ -48,36 +48,38 @@
                         </div>
                     </div>
                 }
-                @* <hr />
-                <div class="py-4 d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="font-medium">Golden Gate Catering</h4>
-                        <p class="text-sm text-gray-500">
-                            Catering • Applied 3 days ago
-                        </p>
-                    </div>
-                    <div class="space-x-2">
-                        <button class="btn btn-outline-secondary btn-sm">
-                            Reject
-                        </button>
-                        <button class="btn btn-primary btn-sm">Approve</button>
-                    </div>
-                </div>
-                <hr />
-                <div class="py-4 d-flex justify-content-between align-items-center">
-                    <div>
-                        <h4 class="font-medium">Harmony Wedding Music</h4>
-                        <p class="text-sm text-gray-500">
-                            Music • Applied 5 days ago
-                        </p>
-                    </div>
-                    <div class="space-x-2">
-                        <button class="btn btn-outline-secondary btn-sm">
-                            Reject
-                        </button>
-                        <button class="btn btn-primary btn-sm">Approve</button>
-                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="card-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="text-lg font-medium">Venue</h3>
+                @* add button for venue *@
+                @* <div class="d-flex justify-content-end">
+                    <a href="@Url.Action("Create", "Venue")" class="btn btn-primary">Add New Venue</a>
                 </div> *@
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="divide-y divide-gray-200">
+                @if (Model.Venues == null || !Model.Venues.Any())
+                {
+                    <li class="list-group-item text-center py-5">
+                        <div class="text-muted">No Venues Found!.</div>
+                    </li>
+                }
+                @foreach (var venue in Model.Venues)
+                {
+                    <div class="py-4 d-flex justify-content-between align-items-center">
+                        <div>
+                            <h4 class="font-medium">@venue?.VenueName</h4>
+                            <p class="text-sm text-gray-500">
+                                @venue.VenueType
+                            </p>
+                        </div>
+                    </div>
+                }
             </div>
         </div>
     </div>

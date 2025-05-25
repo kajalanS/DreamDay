@@ -1,6 +1,8 @@
+using System.Security.Claims;
 using DreamDay.Attributes;
 using DreamDay.Data;
 using DreamDay.Database.Core.Enum;
+using DreamDay.Models;
 using DreamDay.Models.View;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -101,12 +103,65 @@ namespace DreamDay.Controllers
         [Route("Venue/{id:guid}")]
         public IActionResult Details(Guid id)
         {
-            var wedding = Context.Venues.FirstOrDefault(w => w.Id == id);
-            if (wedding == null)
+            var venue = Context.Venues.FirstOrDefault(w => w.Id == id);
+            if (venue == null)
             {
                 return NotFound();
             }
-            return View(wedding);
+            return View(venue);
+        }
+
+        [HttpGet]
+        [Route("Venue/Create")]
+        public IActionResult SetupVenue()
+        {
+            return View(new VenueCreateModel());
+        }
+
+        [HttpPost]
+        [Route("Venue/Create")]
+        public IActionResult SetupVenue(VenueCreateModel model)
+        {
+            var userIdString = User.FindFirst(ClaimTypes.NameIdentifier)?.Value ?? string.Empty;
+            if (string.IsNullOrEmpty(userIdString) || !Guid.TryParse(userIdString, out _))
+            {
+                return View(null);
+            }
+
+            var userId = Guid.Parse(userIdString);
+            var user = Context.Users
+                .Include(u => u.Profile)
+                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Budget)
+                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.Venue)
+                .Include(u => u.Couple)?.ThenInclude(c => c.Weddings)?.ThenInclude(w => w.WeddingVendors)
+                .Include(u => u.Planner)
+                .Include(u => u.Vendor)
+                .Where(u => u.Id == userId)
+                .FirstOrDefault();
+
+            if (ModelState.IsValid)
+            {
+                var venue = new Venue
+                {
+                    Id = Guid.NewGuid(),
+                    VenueName = model.VenueName,
+                    VenueType = model.VenueType,
+                    Capacity = model.Capacity,
+                    Address = model.Address,
+                    Description = model.Description,
+                    ImageURL = model.ImageURL,
+                    ContactInfo = model.ContactInfo,
+                    PriceRange = model.PriceRange,
+                    VendorId = user.Vendor?.Id ?? Guid.Empty,
+                };
+
+                Context.Venues.Add(venue);
+                Context.SaveChanges();
+
+                return RedirectToAction("Index");
+            }
+
+            return View(model);
         }
     }
 }

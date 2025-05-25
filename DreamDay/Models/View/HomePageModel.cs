@@ -13,6 +13,7 @@ namespace DreamDay.Models.View
         // public Vendor VendorData { get; set; } = new();
         public GuestListViewModel GuestList { get; set; } = new();
         public VendorPageModel VendorPage { get; set; } = new();
+        public List<Venue> Venues { get; set; } = [];
         public AdminStates AdminStates { get; set; } = new();
 
     }

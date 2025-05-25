@@ -4,14 +4,6 @@
     string searchQuery = ViewBag.SearchQuery as string ?? "";
     string SelectedCapacity = ViewBag.SelectedCapacity ?? "";
     string SelectedCategories = ViewBag.SelectedCategories ?? "";
-
-    // Example Venue Data (Ideally, this would come from your Controller)
-    @* var venues = new[] {
-        new { id = 1, name = "Crystal Palace", type = "Ballroom", capacity = 300, rating = 4.8, reviewCount = 156, image = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3", description = "Elegant ballroom venue with crystal chandeliers and modern amenities.", location = "San Francisco, CA", priceRange = "$$$", features = new[] { "Parking", "Catering Kitchen", "Bridal Suite" } },
-        new { id = 2, name = "Sunset Beach Resort", type = "Beach", capacity = 200, rating = 4.9, reviewCount = 124, image = "https://images.unsplash.com/photo-1544124499-58912cbddaad?ixlib=rb-4.0.3", description = "Beautiful beachfront venue perfect for sunset ceremonies.", location = "Los Angeles, CA", priceRange = "$$$$", features = new[] { "Beach Access", "Indoor/Outdoor", "Accommodation" } },
-        new { id = 3, name = "Mountain View Gardens", type = "Garden", capacity = 150, rating = 4.7, reviewCount = 98, image = "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?ixlib=rb-4.0.3", description = "Stunning garden venue with mountain backdrop.", location = "Seattle, WA", priceRange = "$$", features = new[] { "Gardens", "Covered Area", "Photo Locations" } },
-        new { id = 4, name = "Historic Grand Hotel", type = "Hotel", capacity = 400, rating = 4.6, reviewCount = 178, image = "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?ixlib=rb-4.0.3", description = "Iconic hotel venue with classic architecture and modern luxury.", location = "Chicago, IL", priceRange = "$$$$", features = new[] { "Accommodation", "Multiple Spaces", "Full Service" } }
-    }; *@
     var venues = Model.Venues;
 }
 <div class="container">

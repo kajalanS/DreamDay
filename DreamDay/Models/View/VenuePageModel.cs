@@ -13,7 +13,7 @@ namespace DreamDay.Models.View
         public decimal PriceRange { get; set; }
         public string? Description { get; set; }
         public string? VenueType { get; set; }
-        public string? ImageURL { get; set; }
+        public string? ImageURL { get; set; } = "/img/vendor-default.png";
     }
     public class VenuePageModel : BaseViewModel
     {

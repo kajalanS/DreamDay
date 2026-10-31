@@ -396,3 +396,14 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+
+
+
+DreamDay/appsettings.json
+*/appsettings.json
+
+
+
+
+
